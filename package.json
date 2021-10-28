@@ -1,0 +1,31 @@
+{
+  "name": "finisher",
+  "version": "1.0.0",
+  "description": "An Odin Project Todo App",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev-server": "webpack serve --open",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loganwoolf/finisher.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPLv3",
+  "bugs": {
+    "url": "https://github.com/loganwoolf/finisher/issues"
+  },
+  "homepage": "https://github.com/loganwoolf/finisher#readme",
+  "devDependencies": {
+    "css-loader": "^6.5.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.60.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  }
+}
