@@ -28,6 +28,7 @@ const projects = (() => {
 	}
 	
 	addProject('Main')
+	addProject('Personal')
 
 	return { projectList }
 })() 

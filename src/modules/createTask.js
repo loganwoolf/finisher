@@ -78,6 +78,7 @@ const tasks = (() => {
 	}
 
 	addTask('First task') // remove for prod
+	addTask('Go crazy')
 
 	return { taskList }
 })()
