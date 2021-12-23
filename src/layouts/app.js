@@ -5,20 +5,18 @@ import { projects } from "../modules/createProject"
 if (projects.projectList.length === 0) {
 	projects.addProject('Main')
 	projects.addProject('Personal')
-	tasks.addTask('First task', 'Main') // remove for prod
+
+	tasks.addTask('Do Odin', 'Main')
+	tasks.addTask('Do Lighthouse', 'Main')
+	tasks.addTask('Get busy', 'Personal')
 	tasks.addTask('Go crazy', 'Personal')
 }
 
-console.log(tasks.taskList)
-	
-const app = () => {
+const app = (() => {
 
 	const state = {
 		currentProject: projects.projectList[0]
 	}
-
-	const layoutElement = document.createElement('div')
-	layoutElement.classList.add('layout')
 
 	// render project tabs
 	const projectTabs = document.createElement('div')
@@ -47,15 +45,38 @@ const app = () => {
 	renderProjectTabs()
 
 	// render tasks 
-
 	const currentTasks = document.createElement('div')
 	currentTasks.classList.add('task-list')
+
+	function renderCurrentTasks (currentProject) {
+		tasks.taskList.forEach( (task) => {
+			if (task.parentProject === currentProject.name) {
+
+				const taskElement = document.createElement('div')
+				taskElement.classList.add('task-element')
+				taskElement.dataset.id = task.id
+				
+				const taskText = document.createElement('p')
+				taskText.innerText = task.title
+				
+				taskElement.appendChild(taskText)
+				currentTasks.appendChild(taskElement)
+			}
+		})
+		
+		
+	}
+
+	renderCurrentTasks(state.currentProject)
+
+	const layoutElement = document.createElement('div')
+	layoutElement.classList.add('layout')
 
 	layoutElement.appendChild(projectTabs)
 	layoutElement.appendChild(currentTasks)
 
-	return layoutElement
-}
+	return { layoutElement, renderProjectTabs, renderCurrentTasks }
+})()
 
 
 
