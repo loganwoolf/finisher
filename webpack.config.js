@@ -16,6 +16,7 @@ module.exports = {
    plugins: [
       new HtmlWebpackPlugin({
          title: 'Web App Title', // change me
+         favicon: 'images/favicon.svg'
       }),
    ],
    output: {
