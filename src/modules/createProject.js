@@ -26,11 +26,8 @@ const projects = (() => {
 		const newProject = projectFactory(name)
 		projectList.push(newProject)
 	}
-	
-	addProject('Main')
-	addProject('Personal')
 
-	return { projectList }
+	return { projectList, addProject }
 })() 
 
 export { projects }

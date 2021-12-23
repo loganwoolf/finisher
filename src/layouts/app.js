@@ -1,6 +1,16 @@
 import { tasks } from "../modules/createTask"
 import { projects } from "../modules/createProject"
 
+// conditionally render default projects
+if (projects.projectList.length === 0) {
+	projects.addProject('Main')
+	projects.addProject('Personal')
+	tasks.addTask('First task', 'Main') // remove for prod
+	tasks.addTask('Go crazy', 'Personal')
+}
+
+console.log(tasks.taskList)
+	
 const app = () => {
 
 	const state = {
@@ -46,5 +56,7 @@ const app = () => {
 
 	return layoutElement
 }
+
+
 
 export { app }

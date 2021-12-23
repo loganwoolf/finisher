@@ -3,12 +3,12 @@ const tasks = (() => {
 	
 	const taskList = []
 
-	const taskFactory = (taskTitle, projectId) => {
+	const taskFactory = (taskTitle, projectName) => {
 		const timestamp = new Date()
 
 		let title = taskTitle
 		const id = timestamp.getTime()
-		let parentProject = ''// projects.projectList[0] // interface needed
+		let parentProject = projectName
 		let description = ''
 		let dueDate = ''
 		let priority = false
@@ -31,8 +31,8 @@ const tasks = (() => {
 			get parentProject() {
 				return parentProject
 			},
-			set newParentProject(newProject) {
-				parentProject = newProject
+			set newParentProject(newProjectName) {
+				parentProject = newProjectName
 			},
 
 			get description() {
@@ -72,15 +72,12 @@ const tasks = (() => {
 		}
 	}
 
-	const addTask = ( title ) => {
-		const newTask = taskFactory(title)
+	const addTask = ( title, project ) => {
+		const newTask = taskFactory(title, project)
 		taskList.push(newTask)
 	}
 
-	addTask('First task') // remove for prod
-	addTask('Go crazy')
-
-	return { taskList }
+	return { taskList, addTask }
 })()
 
 export { tasks }
