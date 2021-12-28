@@ -1,5 +1,6 @@
 import { tasks } from "../modules/createTask"
 import { projects } from "../modules/createProject"
+import { determineTaskEnterAction, determineTaskLeaveAction, determineTaskClickAction } from "../modules/taskActions";
 
 // conditionally render default projects
 if (projects.projectList.length === 0) {
@@ -89,9 +90,16 @@ const app = (() => {
   function addProjectTabListener () {
     const projectList = document.querySelector('.project-tabs')
 
-
     projectList.addEventListener('click', switchCurrentProject)
   }
+
+	function addTaskListener () {
+		const tasks = document.querySelector('.task-list')
+
+		tasks.addEventListener('mouseover', determineTaskEnterAction)
+		tasks.addEventListener('mouseout', determineTaskLeaveAction)
+		tasks.addEventListener('click', determineTaskClickAction)
+	}
 
 	// render project tabs
 	const projectTabs = document.createElement('div')
@@ -110,7 +118,7 @@ const app = (() => {
 	layoutElement.appendChild(projectTabs)
 	layoutElement.appendChild(currentTasks)
 
-	return { layoutElement, addProjectTabListener }
+	return { layoutElement, addProjectTabListener, addTaskListener }
 })()
 
 
