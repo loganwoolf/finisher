@@ -1,14 +1,52 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+p {
+  margin: 0;
+}
+
 .layout {
-  border: 1px solid black;
   margin: 0 auto;
   width: min-content;
   display: grid;
-  grid-template-columns: max-content 250px;
-  gap: 2rem;
+  grid-template-columns: max-content 450px;
 }
 
 .project-tabs {
   display: flex;
   flex-direction: column;
   width: max-content;
+  gap: 3px;
+}
+
+.project-tab {
+  font-size: 18px;
+  height: 4rem;
+  min-width: 5rem;
+  border: 2px solid grey;
+  border-left: 5px solid grey;
+  border-right: none;
+  border-radius: 6% 0 0 6%;
+  background: hsla(220, 30%, 70%, 40%);
+}
+.active-project-tab {
+  background: white;
+  border-left: 5px solid green;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  border: 2px solid grey;
+  padding: 1rem 3rem;
+}
+
+.task-element {
+  border: 2px solid grey;
+  padding: 1rem 2rem;
 }
