@@ -15,9 +15,28 @@ if (projects.projectList.length === 0) {
 const app = (() => {
 
 	const state = {
-		currentProject: projects.projectList[0]
+		currentProject: projects.projectList[0],
+		updateCurrentProject: (elementNumber) => state.currentProject = projects.projectList[elementNumber]
 	}
 
+	function switchCurrentProject (e) {
+		// check which project button was clicked
+		let elementNumber = [...e.target.parentNode.children].indexOf(e.target)
+		if (elementNumber === projects.projectList.length) {
+			// create new project
+			// projects.addProject('New Project')
+			// insert tab into list
+		} else {
+			state.updateCurrentProject(elementNumber)
+			// remove visible tasks
+			const taskElement = document.querySelector('.task-list')
+			taskElement.replaceChildren()
+
+			// render tasks from new current project
+			renderCurrentTasks(state.currentProject)
+
+		}
+	}
 	// render project tabs
 	const projectTabs = document.createElement('div')
 	projectTabs.classList.add('project-tabs')
@@ -44,6 +63,7 @@ const app = (() => {
 
 	renderProjectTabs()
 
+
 	// render tasks 
 	const currentTasks = document.createElement('div')
 	currentTasks.classList.add('task-list')
@@ -69,13 +89,23 @@ const app = (() => {
 
 	renderCurrentTasks(state.currentProject)
 
+
+
+  function addProjectTabListener () {
+    const projectList = document.querySelector('.project-tabs')
+
+
+    projectList.addEventListener('click', switchCurrentProject)
+  }
+
 	const layoutElement = document.createElement('div')
 	layoutElement.classList.add('layout')
 
 	layoutElement.appendChild(projectTabs)
 	layoutElement.appendChild(currentTasks)
 
-	return { layoutElement, renderProjectTabs, renderCurrentTasks }
+
+	return { layoutElement, renderProjectTabs, renderCurrentTasks, addProjectTabListener }
 })()
 
 
