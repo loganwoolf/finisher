@@ -50,3 +50,12 @@ p {
   border: 2px solid grey;
   padding: 1rem 2rem;
 }
+
+.task-element p {
+  width: max-content;
+
+}
+
+.hidden {
+  display: none;
+}

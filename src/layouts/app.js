@@ -68,23 +68,35 @@ const app = (() => {
 		projectTabs.appendChild(newProjectButton)
 	}
 
+	function renderSingleTask (task) {
+
+		const taskElement = document.createElement('div')
+		taskElement.classList.add('task-element')
+		taskElement.dataset.id = task.id
+		
+		const taskText = document.createElement('p')
+		taskText.innerText = task.title
+
+		const taskParentProject = document.createElement('div')
+		taskParentProject.classList.add('task-info')
+		taskParentProject.classList.add('task-parent-project')
+		// taskParentProject.classList.add('hidden')
+		taskParentProject.innerText = task.parentProject
+
+		
+		taskElement.appendChild(taskText)
+		taskElement.appendChild(taskParentProject)
+
+		currentTasks.appendChild(taskElement)
+	}
+
 	function renderCurrentTasks (currentProject) {
 		tasks.taskList.forEach( (task) => {
 			if (task.parentProject === currentProject.name) {
-
-				const taskElement = document.createElement('div')
-				taskElement.classList.add('task-element')
-				taskElement.dataset.id = task.id
-				
-				const taskText = document.createElement('p')
-				taskText.innerText = task.title
-				
-				taskElement.appendChild(taskText)
-				currentTasks.appendChild(taskElement)
+				renderSingleTask(task)
 			}
 		})
-		
-		
+
 	}
 
   function addProjectTabListener () {
