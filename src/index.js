@@ -1,7 +1,5 @@
 import './style.css'
 import { app } from './layouts/app'
-import { tasks } from './modules/createTask'
-import { projects } from './modules/createProject'
 
 
 function moduleRender() {

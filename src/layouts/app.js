@@ -40,15 +40,12 @@ const app = (() => {
 
 			// apply active project tab style
 			e.target.classList.add('active-project-tab')
-			
+
 			// render tasks from new current project
 			renderCurrentTasks(state.currentProject)
 
 		}
 	}
-	// render project tabs
-	const projectTabs = document.createElement('div')
-	projectTabs.classList.add('project-tabs')
 
 	function renderProjectTabs () {
 		projects.projectList.forEach( ( project, index ) => {
@@ -70,13 +67,6 @@ const app = (() => {
 		projectTabs.appendChild(newProjectButton)
 	}
 
-	renderProjectTabs()
-
-
-	// render tasks 
-	const currentTasks = document.createElement('div')
-	currentTasks.classList.add('task-list')
-
 	function renderCurrentTasks (currentProject) {
 		tasks.taskList.forEach( (task) => {
 			if (task.parentProject === currentProject.name) {
@@ -96,10 +86,6 @@ const app = (() => {
 		
 	}
 
-	renderCurrentTasks(state.currentProject)
-
-
-
   function addProjectTabListener () {
     const projectList = document.querySelector('.project-tabs')
 
@@ -107,14 +93,24 @@ const app = (() => {
     projectList.addEventListener('click', switchCurrentProject)
   }
 
+	// render project tabs
+	const projectTabs = document.createElement('div')
+	projectTabs.classList.add('project-tabs')
+	renderProjectTabs()
+
+	// render tasks 
+	const currentTasks = document.createElement('div')
+	currentTasks.classList.add('task-list')
+	renderCurrentTasks(state.currentProject)
+
+	// create layoutElement to pass to index.js
 	const layoutElement = document.createElement('div')
 	layoutElement.classList.add('layout')
-
+	// mount app onto layoutElement
 	layoutElement.appendChild(projectTabs)
 	layoutElement.appendChild(currentTasks)
 
-
-	return { layoutElement, renderProjectTabs, renderCurrentTasks, addProjectTabListener }
+	return { layoutElement, addProjectTabListener }
 })()
 
 
