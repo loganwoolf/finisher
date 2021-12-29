@@ -47,6 +47,9 @@ p {
 }
 
 .task-element {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   border: 2px solid grey;
   padding: 1rem 2rem;
 }
@@ -55,6 +58,30 @@ p {
   width: max-content;
 
 }
+
+.task-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border: 2px solid grey;
+}
+.task-property {
+  display: flex;
+  flex-direction: column;
+}
+.property-name {
+  font-size: 0.5rem;
+}
+.property-value {
+  font-size: 0.7rem;
+}
+
+.task-action button {
+  border: none;
+  background: none;
+}
+
+
 
 .hidden {
   display: none;
