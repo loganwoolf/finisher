@@ -68,6 +68,39 @@ const app = (() => {
 		projectTabs.appendChild(newProjectButton)
 	}
 
+	function buildTaskProperty (propertyName, property) {
+		const propertyContainer = document.createElement('div')
+		propertyContainer.classList.add('task-info')
+		propertyContainer.classList.add(`property-${propertyName}`)
+		// taskParentProject.classList.add('hidden')
+		
+		const propertyLabelContainer = document.createElement('div')
+		propertyLabelContainer.classList.add('task-property')
+		propertyContainer.appendChild(propertyLabelContainer)
+
+		const propertyLabel = document.createElement('p')
+		propertyLabel.classList.add('property-name')
+		propertyLabel.innerText = propertyName
+		propertyLabelContainer.appendChild(propertyLabel)
+
+		const propertyValue = document.createElement('p')
+		propertyValue.classList.add('property-value')
+		propertyValue.innerText = property
+		propertyLabelContainer.appendChild(propertyValue)
+		
+		const editableTasks = ['parentProject', 'description', 'dueDate', 'notes']
+		if ( editableTasks.includes(propertyName)) {
+			const propertyActionContainer = document.createElement('div')
+			propertyActionContainer.classList.add('task-action')
+			const editButton = document.createElement('button')
+			editButton.innerText = '✏️'
+			propertyActionContainer.appendChild(editButton)
+			propertyContainer.appendChild(propertyActionContainer)
+		}
+		
+		return propertyContainer
+	}
+
 	function renderSingleTask (task) {
 
 		const taskElement = document.createElement('div')
@@ -75,17 +108,17 @@ const app = (() => {
 		taskElement.dataset.id = task.id
 		
 		const taskText = document.createElement('p')
+		taskText.classList.add('task-title')
 		taskText.innerText = task.title
 
-		const taskParentProject = document.createElement('div')
-		taskParentProject.classList.add('task-info')
-		taskParentProject.classList.add('task-parent-project')
-		// taskParentProject.classList.add('hidden')
-		taskParentProject.innerText = task.parentProject
-
-		
 		taskElement.appendChild(taskText)
-		taskElement.appendChild(taskParentProject)
+		taskElement.appendChild(buildTaskProperty('parentProject', task.parentProject))
+		taskElement.appendChild(buildTaskProperty('description', task.description))
+		taskElement.appendChild(buildTaskProperty('dateCreated', task.dateCreated))
+		taskElement.appendChild(buildTaskProperty('dueDate', task.dueDate))
+		taskElement.appendChild(buildTaskProperty('priority', task.priority))
+		taskElement.appendChild(buildTaskProperty('notes', task.notes))
+		taskElement.appendChild(buildTaskProperty('checklist', task.checklist))
 
 		currentTasks.appendChild(taskElement)
 	}
