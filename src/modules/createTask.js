@@ -7,7 +7,7 @@ const tasks = (() => {
 		const timestamp = new Date()
 
 		let title = taskTitle
-		const id = timestamp.getTime()
+		const id = Math.ceil(Math.random() * 999999)
 		let parentProject = projectName
 		let description = ''
 		let dueDate = ''
