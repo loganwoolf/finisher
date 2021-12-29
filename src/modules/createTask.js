@@ -9,10 +9,11 @@ const tasks = (() => {
 		let title = taskTitle
 		const id = Math.ceil(Math.random() * 999999)
 		let parentProject = projectName
-		let description = ''
-		let dueDate = ''
+		let description = 'None'
+		const dateCreated = `${timestamp.getFullYear()}-${timestamp.getMonth()}-${timestamp.getDate()}`
+		let dueDate = 'None'
 		let priority = false
-		let notes = ''
+		let notes = 'No notes yet'
 		let checklist = []
 
 
@@ -40,6 +41,10 @@ const tasks = (() => {
 			},
 			set newDescription(newDescription) {
 				description = newDescription
+			},
+
+			get dateCreated() {
+				return dateCreated
 			},
 
 			get dueDate() {
