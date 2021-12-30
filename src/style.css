@@ -98,7 +98,12 @@ p {
   transform: translateX(1px) translateY(-1px);
   box-shadow: -3px 3px 3px grey;
 }
-
+#new-task-name {
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  font-family: sans-serif;
+}
 
 .hidden {
   display: none;

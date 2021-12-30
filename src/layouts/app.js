@@ -140,6 +140,7 @@ const app = (() => {
 		inputField.id = 'new-task-name'
 		inputField.placeholder = 'New Task Name...'
 		inputForm.appendChild(inputField)
+		inputField.focus()
 		// set event listener for input completion
 		inputForm.addEventListener('submit', (e) => {
 			e.preventDefault();
