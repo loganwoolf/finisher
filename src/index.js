@@ -15,4 +15,3 @@ function moduleRender() {
 
 document.body.appendChild(moduleRender())
 app.addProjectTabListener()
-app.addTaskListener()
