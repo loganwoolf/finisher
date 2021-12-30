@@ -127,12 +127,22 @@ const app = (() => {
 		currentTasks.appendChild(taskElement)
 	}
 
+	function renderCreateTaskElement () {
+		const newTaskButton = document.createElement('button')
+		newTaskButton.classList.add('create-task')
+		newTaskButton.innerText = 'Create New Task'
+		currentTasks.appendChild(newTaskButton)
+
+	}
+
 	function renderCurrentTasks (currentProject) {
 		tasks.taskList.forEach( (task) => {
 			if (task.parentProject === currentProject.name) {
 				renderSingleTask(task)
 			}
 		})
+
+		renderCreateTaskElement()
 
 	}
 

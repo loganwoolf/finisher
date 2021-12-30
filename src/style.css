@@ -45,6 +45,10 @@ p {
   border: 2px solid grey;
   padding: 1rem 3rem;
 }
+.task-list > * {
+
+  box-shadow: -1px 1px 2px grey;
+}
 
 .task-element {
   display: flex;
@@ -63,11 +67,14 @@ p {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   border: 2px solid grey;
+  padding: 0.5rem;
 }
 .task-property {
   display: flex;
   flex-direction: column;
+  gap: 0.3rem;
 }
 .property-name {
   font-size: 0.5rem;
@@ -75,12 +82,22 @@ p {
 .property-value {
   font-size: 0.7rem;
 }
-
 .task-action button {
   border: none;
   background: none;
 }
-
+.create-task {
+  border: 2px solid grey;
+  background: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  text-align: unset;
+  transition: all 0.1s ease-in-out;
+}
+.create-task:hover {
+  transform: translateX(1px) translateY(-1px);
+  box-shadow: -3px 3px 3px grey;
+}
 
 
 .hidden {
