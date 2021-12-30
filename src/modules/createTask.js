@@ -80,6 +80,7 @@ const tasks = (() => {
 	const addTask = ( title, project ) => {
 		const newTask = taskFactory(title, project)
 		taskList.push(newTask)
+		return newTask
 	}
 
 	return { taskList, addTask }

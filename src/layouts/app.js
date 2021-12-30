@@ -127,12 +127,37 @@ const app = (() => {
 		currentTasks.appendChild(taskElement)
 	}
 
+	function createNewTask () {
+		// select button on dom and remove event listener
+		const newTaskButton = document.querySelector('.create-task')
+		newTaskButton.removeEventListener('click', createNewTask)
+		newTaskButton.innerText = ''
+		// create a form on the button
+		const inputForm = document.createElement('form')
+		newTaskButton.appendChild(inputForm)
+		const inputField = document.createElement('input')
+		inputField.type = 'text'
+		inputField.id = 'new-task-name'
+		inputField.placeholder = 'New Task Name...'
+		inputForm.appendChild(inputField)
+		// set event listener for input completion
+		inputForm.addEventListener('submit', (e) => {
+			e.preventDefault();
+			// create task
+			renderSingleTask(tasks.addTask(inputField.value, state.currentProject.name))
+			// remove new task button and create another at the bottom
+			newTaskButton.remove()
+			renderCreateTaskElement()
+		})
+		
+	}
+
 	function renderCreateTaskElement () {
 		const newTaskButton = document.createElement('button')
 		newTaskButton.classList.add('create-task')
 		newTaskButton.innerText = 'Create New Task'
+		newTaskButton.addEventListener('click', createNewTask)
 		currentTasks.appendChild(newTaskButton)
-
 	}
 
 	function renderCurrentTasks (currentProject) {
