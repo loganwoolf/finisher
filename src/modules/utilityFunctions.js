@@ -23,8 +23,16 @@ const utility = (() => {
     return output.join('')
   }
 
-  
-  return { camelToSnake, camelToHeadline }
+  function padZero (num) {
+    if (num.toString().length === 1) {
+      return `0${num}`
+    } else {
+      return num.toString()
+    }
+  }
+
+
+  return { camelToSnake, camelToHeadline, padZero }
   
 })()
 
