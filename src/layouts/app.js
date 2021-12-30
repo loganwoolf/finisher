@@ -1,6 +1,7 @@
 import { tasks } from "../modules/createTask"
 import { projects } from "../modules/createProject"
-import { determineTaskEnterAction, determineTaskLeaveAction, determineTaskClickAction } from "../modules/taskActions";
+import { utility as u } from "../modules/utilityFunctions"
+import { determineTaskEnterAction, determineTaskLeaveAction, determineTaskClickAction } from "../modules/taskActions"
 
 // conditionally render default projects
 if (projects.projectList.length === 0) {
@@ -71,8 +72,8 @@ const app = (() => {
 	function buildTaskProperty (propertyName, property) {
 		const propertyContainer = document.createElement('div')
 		propertyContainer.classList.add('task-info')
-		propertyContainer.classList.add(`property-${propertyName}`)
-		// taskParentProject.classList.add('hidden')
+		propertyContainer.classList.add(`property-${u.camelToSnake(propertyName)}`)
+		// propertyContainer.classList.add('hidden')
 		
 		const propertyLabelContainer = document.createElement('div')
 		propertyLabelContainer.classList.add('task-property')
@@ -80,7 +81,7 @@ const app = (() => {
 
 		const propertyLabel = document.createElement('p')
 		propertyLabel.classList.add('property-name')
-		propertyLabel.innerText = propertyName
+		propertyLabel.innerText = u.camelToHeadline(propertyName)
 		propertyLabelContainer.appendChild(propertyLabel)
 
 		const propertyValue = document.createElement('p')
