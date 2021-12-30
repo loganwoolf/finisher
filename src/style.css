@@ -4,6 +4,8 @@
 
 body {
   font-family: sans-serif;
+  /* prevent jumping when app is longer than screen */
+  overflow-y: scroll;
 }
 p {
   margin: 0;
@@ -45,11 +47,10 @@ p {
   border: 2px solid grey;
   padding: 1rem 3rem;
 }
-.task-list > * {
+/* .task-list > * {
 
   box-shadow: -1px 1px 2px grey;
-}
-
+} */
 .task-element {
   display: flex;
   flex-direction: column;
@@ -57,12 +58,20 @@ p {
   border: 2px solid grey;
   padding: 1rem 2rem;
 }
-
 .task-element p {
   width: max-content;
 
 }
-
+.task-top-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-expand {
+  border: 2px solid grey;
+  background: none;
+}
 .task-info {
   display: flex;
   flex-direction: row;
@@ -92,17 +101,28 @@ p {
   padding: 1rem 2rem;
   font-size: 1rem;
   text-align: unset;
-  transition: all 0.1s ease-in-out;
+  /* transition: all 0.1s ease-in-out; */
 }
-.create-task:hover {
+/* .create-task:hover {
   transform: translateX(1px) translateY(-1px);
   box-shadow: -3px 3px 3px grey;
-}
+} */
 #new-task-name {
   border: none;
   outline: none;
   font-size: 1rem;
   font-family: sans-serif;
+}
+.pop-out {
+  box-shadow: -1px 1px 2px grey;
+}
+.animate-out {
+  box-shadow: -1px 1px 2px grey;
+  transition: all 0.07s ease-in-out;
+}
+.animate-out:hover {
+  transform: translateX(1px) translateY(-1px);
+  box-shadow: -3px 3px 3px grey;
 }
 
 .hidden {

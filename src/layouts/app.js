@@ -76,7 +76,6 @@ const app = (() => {
 		const propertyContainer = document.createElement('div')
 		propertyContainer.classList.add('task-info')
 		propertyContainer.classList.add(`property-${u.camelToSnake(propertyName)}`)
-		// propertyContainer.classList.add('hidden')
 		
 		const propertyLabelContainer = document.createElement('div')
 		propertyLabelContainer.classList.add('task-property')
@@ -109,22 +108,44 @@ const app = (() => {
 
 		const taskElement = document.createElement('div')
 		taskElement.classList.add('task-element')
+		taskElement.classList.add('pop-out')
 		taskElement.dataset.id = task.id
+
+		const topContainer = document.createElement('div')
+		topContainer.classList.add('task-top-container')
 		
 		const taskText = document.createElement('p')
 		taskText.classList.add('task-title')
 		taskText.innerText = task.title
 
-		taskElement.appendChild(taskText)
-		taskElement.appendChild(buildTaskProperty('parentProject', task.parentProject))
-		taskElement.appendChild(buildTaskProperty('description', task.description))
-		taskElement.appendChild(buildTaskProperty('dateCreated', task.dateCreated))
-		taskElement.appendChild(buildTaskProperty('dueDate', task.dueDate))
-		taskElement.appendChild(buildTaskProperty('priority', task.priority))
-		taskElement.appendChild(buildTaskProperty('notes', task.notes))
-		taskElement.appendChild(buildTaskProperty('checklist', task.checklist))
+		const expandButton = document.createElement('button')
+		expandButton.classList.add('task-expand')
+		expandButton.classList.add('animate-out')
+		expandButton.innerText = '🔍'
+
+
+		const taskDetails = document.createElement('div')
+		taskDetails.classList.add('task-details')
+		taskDetails.classList.add('hidden')
+		
+
+		taskElement.appendChild(topContainer)
+		topContainer.appendChild(taskText)
+		topContainer.appendChild(expandButton)
+		taskElement.appendChild(taskDetails)
+		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject))
+		taskDetails.appendChild(buildTaskProperty('description', task.description))
+		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated))
+		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate))
+		taskDetails.appendChild(buildTaskProperty('priority', task.priority))
+		taskDetails.appendChild(buildTaskProperty('notes', task.notes))
+		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist))
 
 		currentTasks.appendChild(taskElement)
+
+		expandButton.addEventListener('click', () => {
+			taskDetails.classList.toggle('hidden')
+		})
 	}
 
 	function createNewTask () {
@@ -156,6 +177,7 @@ const app = (() => {
 	function renderCreateTaskElement () {
 		const newTaskButton = document.createElement('button')
 		newTaskButton.classList.add('create-task')
+		newTaskButton.classList.add('animate-out')
 		newTaskButton.innerText = 'Create New Task'
 		newTaskButton.addEventListener('click', createNewTask)
 		currentTasks.appendChild(newTaskButton)
