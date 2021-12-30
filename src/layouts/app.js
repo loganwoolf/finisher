@@ -24,28 +24,31 @@ const app = (() => {
 	function switchCurrentProject (e) {
 		// check which project button was clicked
 		let elementNumber = [...e.target.parentNode.children].indexOf(e.target)
-		if (elementNumber === projects.projectList.length) {
-			// create new project
-			// projects.addProject('New Project')
-			// insert tab into list
-		} else {
-			// remove active project tab class from previous tab
-			const previousProjectTab = document.querySelector('.active-project-tab')
-			previousProjectTab.classList.remove('active-project-tab')
-
-			// update state to new project
-			state.updateCurrentProject(elementNumber)
-
-			// remove visible tasks
-			const taskElement = document.querySelector('.task-list')
-			taskElement.replaceChildren()
-
-			// apply active project tab style
-			e.target.classList.add('active-project-tab')
-
-			// render tasks from new current project
-			renderCurrentTasks(state.currentProject)
-
+		// check that only a button was clicked
+		if (e.target.localName === 'button') {
+			if (elementNumber === projects.projectList.length) {
+				// create new project
+				// projects.addProject('New Project')
+				// insert tab into list
+			} else {
+				// remove active project tab class from previous tab
+				const previousProjectTab = document.querySelector('.active-project-tab')
+				previousProjectTab.classList.remove('active-project-tab')
+				
+				// update state to new project
+				state.updateCurrentProject(elementNumber)
+				
+				// remove visible tasks
+				const taskElement = document.querySelector('.task-list')
+				taskElement.replaceChildren()
+				
+				// apply active project tab style
+				e.target.classList.add('active-project-tab')
+				
+				// render tasks from new current project
+				renderCurrentTasks(state.currentProject)
+				
+			}
 		}
 	}
 
