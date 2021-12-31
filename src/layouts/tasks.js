@@ -52,6 +52,40 @@ const taskLayout = ( () => {
 		return propertyContainer
 	}
 
+	function editTextContents (e) {
+		// hide edit button
+		const editButton = e.target
+		editButton.classList.toggle('hidden')
+
+		// create form and text area for input
+		const propertyElement = e.target.parentNode.parentNode.firstChild.lastChild
+		const inputForm = document.createElement('form')
+		propertyElement.classList.toggle('hidden')
+		propertyElement.parentNode.appendChild(inputForm)
+		const inputField = document.createElement('input')
+		if (propertyElement.innerText === 'None' || propertyElement.innerText === 'No notes yet' || propertyElement.innerText === '') {
+			const label = propertyElement.parentNode.firstChild.innerText.toLowerCase()
+			inputField.placeholder = `Add ${label}...`
+		} else {
+			inputField.value = propertyElement.innerText
+		}
+		inputForm.append(inputField)
+		inputField.focus()
+
+		// save text input to task object and render changes
+		inputForm.addEventListener('submit', (e) => {
+			e.preventDefault()
+
+			const currentTask = tasks.taskList.filter(task => task.id === +this.dataset.id)[0]
+			currentTask.newDescription = inputField.value
+
+			inputForm.remove()
+			propertyElement.innerText = currentTask.description
+			propertyElement.classList.toggle('hidden')
+			editButton.classList.toggle('hidden')
+		})
+	}
+
   function renderSingleTask (task) {
 
 		const taskElement = document.createElement('div')
