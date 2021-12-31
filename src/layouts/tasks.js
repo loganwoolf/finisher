@@ -17,7 +17,7 @@ const taskLayout = ( () => {
 		updateCurrentProject: (elementNumber) => state.currentProject = projects.projectList[elementNumber]
 	}
 
-	function buildTaskProperty (propertyName, property) {
+	function buildTaskProperty (propertyName, property, taskId) {
 		const propertyContainer = document.createElement('div')
 		propertyContainer.classList.add('task-info')
 		propertyContainer.classList.add(`property-${u.camelToSnake(propertyName)}`)
@@ -36,14 +36,17 @@ const taskLayout = ( () => {
 		propertyValue.innerText = property
 		propertyLabelContainer.appendChild(propertyValue)
 		
-		const editableTasks = ['parentProject', 'description', 'dueDate', 'notes']
-		if ( editableTasks.includes(propertyName)) {
+		const editableTextProperties = ['description', 'notes']
+		if ( editableTextProperties.includes(propertyName)) {
 			const propertyActionContainer = document.createElement('div')
 			propertyActionContainer.classList.add('task-action')
 			const editButton = document.createElement('button')
+			editButton.dataset.id = taskId
 			editButton.innerText = '✏️'
 			propertyActionContainer.appendChild(editButton)
 			propertyContainer.appendChild(propertyActionContainer)
+
+			editButton.addEventListener('click', editTextContents)
 		}
 		
 		return propertyContainer
@@ -79,12 +82,12 @@ const taskLayout = ( () => {
 		topContainer.appendChild(expandButton)
 		taskElement.appendChild(taskDetails)
 		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject))
-		taskDetails.appendChild(buildTaskProperty('description', task.description))
-		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated))
-		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate))
-		taskDetails.appendChild(buildTaskProperty('priority', task.priority))
-		taskDetails.appendChild(buildTaskProperty('notes', task.notes))
-		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist))
+		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id))
+		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id))
+		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate, task.id))
+		taskDetails.appendChild(buildTaskProperty('priority', task.priority, task.id))
+		taskDetails.appendChild(buildTaskProperty('notes', task.notes, task.id))
+		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist, task.id))
 
 		currentTasks.appendChild(taskElement)
 
