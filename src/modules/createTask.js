@@ -1,16 +1,16 @@
+import { utility as u } from "./utilityFunctions"	
 
 const tasks = (() => {
 	
 	const taskList = []
 
 	const taskFactory = (taskTitle, projectName) => {
-		const timestamp = new Date()
 
 		let title = taskTitle
 		const id = Math.ceil(Math.random() * 999999)
 		let parentProject = projectName
 		let description = 'None'
-		const dateCreated = `${timestamp.getFullYear()}-${timestamp.getMonth()}-${timestamp.getDate()}`
+		const dateCreated = new Date()
 		let dueDate = 'None'
 		let priority = false
 		let notes = 'No notes yet'
@@ -44,7 +44,7 @@ const tasks = (() => {
 			},
 
 			get dateCreated() {
-				return dateCreated
+				return `${dateCreated.getFullYear()}-${u.padZero(dateCreated.getMonth() + 1)}-${u.padZero(dateCreated.getDate())}`
 			},
 
 			get dueDate() {
