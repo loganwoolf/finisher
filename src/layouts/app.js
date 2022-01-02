@@ -12,13 +12,8 @@ const app = (() => {
 	function switchCurrentProject (e) {
 		// check which project button was clicked
 		let elementNumber = [...e.target.parentNode.children].indexOf(e.target)
-		// check that only a button was clicked
-		if (e.target.localName === 'button') {
-			if (elementNumber === projects.projectList.length) {
-				// create new project
-				// projects.addProject('New Project')
-				// insert tab into list
-			} else {
+		// check that only a project button was clicked
+		if (e.target.localName === 'button' && ![...e.target.classList].includes('new-project')) {
 				// remove active project tab class from previous tab
 				const previousProjectTab = document.querySelector('.active-project-tab')
 				previousProjectTab.classList.remove('active-project-tab')
@@ -36,7 +31,6 @@ const app = (() => {
 				// render tasks from new current project
 				taskLayout.renderCurrentTasks(taskLayout.state.currentProject)
 				
-			}
 		}
 	}
 
