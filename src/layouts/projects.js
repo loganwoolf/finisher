@@ -9,6 +9,10 @@ if (projects.projectList.length === 0) {
 const projectLayout = (() => {
 
 	function renderProjectTabs () {
+		// clear everything from tabs area
+		tabs.replaceChildren()
+		
+		// loop through all projects and render a tab for each
 		projects.projectList.forEach( ( project, index ) => {
 			const projectTab = document.createElement('button')
 			projectTab.classList.add('project-tab')
@@ -18,10 +22,13 @@ const projectLayout = (() => {
 			projectTab.textContent = project.name
 
 			tabs.appendChild(projectTab)
+			
 		})
+		// render the create project tab at the end
+		renderCreateProjectTab()
 	}
 
-	function renderNewProjectTab () {
+	function renderCreateProjectTab () {
 
 		// create add new project button
 		const newProjectButton = document.createElement('button')
@@ -36,9 +43,8 @@ const projectLayout = (() => {
 	const tabs = document.createElement('div')
 	tabs.classList.add('project-tabs')
 	renderProjectTabs()
-	renderNewProjectTab()
 
-  return { tabs }
+  return { tabs, renderProjectTabs }
 })()
 
 export { projectLayout }
