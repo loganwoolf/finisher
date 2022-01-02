@@ -35,6 +35,14 @@ p {
   border-radius: 6% 0 0 6%;
   background: hsla(220, 30%, 70%, 40%);
 }
+
+.project-tab input {
+  width: 3ch;
+  background: unset;
+  border: unset;
+  outline: unset;
+  text-align: center;
+}
 .active-project-tab {
   background: white;
   border-left: 5px solid green;
