@@ -19,6 +19,10 @@ const projectLayout = (() => {
 
 			tabs.appendChild(projectTab)
 		})
+	}
+
+	function renderNewProjectTab () {
+
 		// create add new project button
 		const newProjectButton = document.createElement('button')
 		newProjectButton.classList.add('project-tab')
@@ -32,6 +36,7 @@ const projectLayout = (() => {
 	const tabs = document.createElement('div')
 	tabs.classList.add('project-tabs')
 	renderProjectTabs()
+	renderNewProjectTab()
 
   return { tabs }
 })()
