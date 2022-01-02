@@ -16,6 +16,8 @@ This project has not yet deployed, and can only be run in the development enviro
 - Creating tasks in current project
 - Expand task to view details
 - Switch projects
+- Add a task description
+- Add task notes
 
 ### Not Yet Implemented
 - Creating new projects
