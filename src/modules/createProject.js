@@ -1,13 +1,12 @@
 
-const projects = (() => {
+const projects = ( () => {
 
 	const projectList = []
 
 	const projectFactory = ( projectName ) => {
-		const timestamp = new Date()
 		
 		let name = projectName
-		const id = timestamp.getTime()
+		const id = Math.ceil(Math.random() * 999999)
 		
 		return {
 			get name() {
@@ -28,6 +27,6 @@ const projects = (() => {
 	}
 
 	return { projectList, addProject }
-})() 
+} ) () 
 
 export { projects }
