@@ -31,8 +31,16 @@ const utility = (() => {
     }
   }
 
+  function growInputField () {
+		this.style.width = (this.value.length + 2) + 'ch'
+	}
 
-  return { camelToSnake, camelToHeadline, padZero }
+  return { 
+    camelToSnake,
+    camelToHeadline,
+    padZero,
+    growInputField,
+  }
   
 })()
 
