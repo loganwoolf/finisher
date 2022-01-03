@@ -7,6 +7,7 @@ const tasks = (() => {
 	const taskFactory = (taskTitle, projectName) => {
 
 		let title = taskTitle
+		let status = false
 		const id = Math.ceil(Math.random() * 999999)
 		let parentProject = projectName
 		let description = 'None'
@@ -23,6 +24,15 @@ const tasks = (() => {
 			},
 			set newTitle(newTitle) {
 				title = newTitle
+			},
+
+			get status() {
+				return status
+			},
+			set setStatus(bool) {
+				if (typeof bool === 'boolean') {
+					status = bool
+				}
 			},
 
 			get id() {

@@ -111,26 +111,37 @@ const taskLayout = ( () => {
 
 		const topContainer = document.createElement('div')
 		topContainer.classList.add('task-top-container')
+		taskElement.appendChild(topContainer)
 		
 		const taskText = document.createElement('p')
 		taskText.classList.add('task-title')
 		taskText.innerText = task.title
+		topContainer.appendChild(taskText)
+
+		const completedCheckboxParent = document.createElement('label')
+		completedCheckboxParent.classList.add('task-status')
+		completedCheckboxParent.classList.add('animate-out')
+		const completedCheckboxChild = document.createElement('input')
+		completedCheckboxChild.type = 'checkbox'
+		const customCheckbox = document.createElement('div')
+		customCheckbox.classList.add('checkbox')
+		completedCheckboxParent.appendChild(completedCheckboxChild)
+		completedCheckboxParent.appendChild(customCheckbox)
+		topContainer.appendChild(completedCheckboxParent)
 
 		const expandButton = document.createElement('button')
 		expandButton.classList.add('task-expand')
 		expandButton.classList.add('animate-out')
 		expandButton.innerText = '🔍'
+		topContainer.appendChild(expandButton)
 
 
 		const taskDetails = document.createElement('div')
 		taskDetails.classList.add('task-details')
 		taskDetails.classList.add('hidden')
+		taskElement.appendChild(taskDetails)
 		
 
-		taskElement.appendChild(topContainer)
-		topContainer.appendChild(taskText)
-		topContainer.appendChild(expandButton)
-		taskElement.appendChild(taskDetails)
 		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject))
 		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id))
 		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id))
@@ -141,6 +152,23 @@ const taskLayout = ( () => {
 
 		currentTasks.appendChild(taskElement)
 
+		// event to toggle tasks as complete
+		completedCheckboxChild.addEventListener('click', (e) => {
+			e.stopPropagation()
+			const taskId = +e.target.parentNode.parentNode.parentNode.dataset.id
+			const currentTask = tasks.taskList.filter(task => task.id === taskId)[0]
+			if (completedCheckboxChild.checked) {
+				console.log('checked')
+				currentTask.setStatus = true
+				console.log(currentTask.status)
+			} else {
+				console.log('unchecked')
+				currentTask.setStatus = false
+				console.log(currentTask.status)
+			}
+		})
+
+		// event to open details for a task
 		expandButton.addEventListener('click', () => {
 			taskDetails.classList.toggle('hidden')
 		})

@@ -18,10 +18,11 @@ This project has not yet deployed, and can only be run in the development enviro
 - Switch projects
 - Add a task description
 - Add task notes
-
-### Not Yet Implemented
 - Creating new projects
 - Mark task as done
+
+### Not Yet Implemented
+- Switch to see completed tasks
 - Delete tasks
 - Delete projects
 - Edit details of tasks
