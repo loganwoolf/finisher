@@ -123,6 +123,8 @@ const taskLayout = ( () => {
 		completedCheckboxParent.classList.add('animate-out')
 		const completedCheckboxChild = document.createElement('input')
 		completedCheckboxChild.type = 'checkbox'
+		// set checkbox as per task status
+		task.status ? completedCheckboxChild.checked = true : completedCheckboxChild.checked = false
 		const customCheckbox = document.createElement('div')
 		customCheckbox.classList.add('checkbox')
 		completedCheckboxParent.appendChild(completedCheckboxChild)
@@ -158,13 +160,9 @@ const taskLayout = ( () => {
 			const taskId = +e.target.parentNode.parentNode.parentNode.dataset.id
 			const currentTask = tasks.taskList.filter(task => task.id === taskId)[0]
 			if (completedCheckboxChild.checked) {
-				console.log('checked')
 				currentTask.setStatus = true
-				console.log(currentTask.status)
 			} else {
-				console.log('unchecked')
 				currentTask.setStatus = false
-				console.log(currentTask.status)
 			}
 		})
 
