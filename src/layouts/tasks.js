@@ -18,31 +18,42 @@ const taskLayout = ( () => {
 	}
 
 	function buildTaskProperty (propertyName, property, taskId) {
+
+		// create property element
 		const propertyContainer = document.createElement('div')
 		propertyContainer.classList.add('task-info')
 		propertyContainer.classList.add(`property-${u.camelToSnake(propertyName)}`)
 		
+		// create property label container
 		const propertyLabelContainer = document.createElement('div')
 		propertyLabelContainer.classList.add('task-property')
 		propertyContainer.appendChild(propertyLabelContainer)
 
-		const propertyLabel = document.createElement('p')
-		propertyLabel.classList.add('property-name')
-		propertyLabel.innerText = u.camelToHeadline(propertyName)
-		propertyLabelContainer.appendChild(propertyLabel)
+		// create title element
+		const propertyTitle = document.createElement('p')
+		propertyTitle.classList.add('property-name')
+		propertyTitle.innerText = u.camelToHeadline(propertyName)
+		propertyLabelContainer.appendChild(propertyTitle)
 
+		// create value element
 		const propertyValue = document.createElement('p')
 		propertyValue.classList.add('property-value')
 		propertyValue.innerText = property
 		propertyLabelContainer.appendChild(propertyValue)
-		
+
+		// create edit buttons for text field properties
 		const editableTextProperties = ['description', 'notes']
 		if ( editableTextProperties.includes(propertyName)) {
+			// create action container (should be placed on every element)
 			const propertyActionContainer = document.createElement('div')
 			propertyActionContainer.classList.add('task-action')
+			// create edit button
 			const editButton = document.createElement('button')
+			// apply data-id of current task to pass to event handler
 			editButton.dataset.id = taskId
+			// set icon of edit button
 			editButton.innerText = '✏️'
+
 			propertyActionContainer.appendChild(editButton)
 			propertyContainer.appendChild(propertyActionContainer)
 
@@ -58,11 +69,14 @@ const taskLayout = ( () => {
 		editButton.classList.toggle('hidden')
 
 		// create form and text area for input
+		// get current property's value element
 		const propertyElement = e.target.parentNode.parentNode.firstChild.lastChild
+		// create input form over value element
 		const inputForm = document.createElement('form')
 		propertyElement.classList.toggle('hidden')
 		propertyElement.parentNode.appendChild(inputForm)
 		const inputField = document.createElement('input')
+		// create text placeholder text in form input
 		if (propertyElement.innerText === 'None' || propertyElement.innerText === 'No notes yet' || propertyElement.innerText === '') {
 			const label = propertyElement.parentNode.firstChild.innerText.toLowerCase()
 			inputField.placeholder = `Add ${label}...`
@@ -76,9 +90,11 @@ const taskLayout = ( () => {
 		inputForm.addEventListener('submit', (e) => {
 			e.preventDefault()
 
+			// select current task using data-id (created on edit button)
 			const currentTask = tasks.taskList.filter(task => task.id === +this.dataset.id)[0]
 			currentTask.newDescription = inputField.value
 
+			// restore hidden elements and display property
 			inputForm.remove()
 			propertyElement.innerText = currentTask.description
 			propertyElement.classList.toggle('hidden')
