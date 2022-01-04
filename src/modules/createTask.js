@@ -4,18 +4,19 @@ const tasks = (() => {
 	
 	const taskList = []
 
-	const taskFactory = (taskTitle, projectName) => {
+	const taskFactory = (taskTitle, projectName, knownProperties = {} ) => {
+		
 
 		let title = taskTitle
-		let status = false
-		const id = Math.ceil(Math.random() * 999999)
-		let parentProject = projectName
-		let description = 'None'
-		const dateCreated = new Date()
-		let dueDate = 'None'
-		let priority = false
-		let notes = 'No notes yet'
-		let checklist = []
+		let status = knownProperties.status || false
+		const id = knownProperties.id || Math.ceil(Math.random() * 999999)
+		let parentProject = knownProperties.parentProject || projectName
+		let description = knownProperties.description || 'None'
+		const dateCreated = u.offsetTimeByZone(new Date(knownProperties.dateCreated)) || new Date()
+		let dueDate = knownProperties.dueDate || 'None'
+		let priority = knownProperties.priority || false
+		let notes = knownProperties.notes || 'No notes yet'
+		let checklist = knownProperties.checklist || []
 
 
 		return {
