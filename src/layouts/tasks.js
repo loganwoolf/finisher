@@ -166,6 +166,7 @@ const taskLayout = ( () => {
 			} else {
 				currentTask.setStatus = false
 			}
+			setLocalStorage()
 		})
 
 		// event to open details for a task

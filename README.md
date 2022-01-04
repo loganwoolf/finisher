@@ -20,16 +20,16 @@ This project has not yet deployed, and can only be run in the development enviro
 - Add task notes
 - Creating new projects
 - Mark task as done
+- Persist with localstorage
 
 ### Not Yet Implemented
-- Switch to see completed tasks
+- Switch to (un)see completed tasks
 - Delete tasks
 - Delete projects
 - Edit details of tasks
 - Move tasks to different projects
 - See priority in overview
 - Checklist for task steps
-- Persist with localstorage
 - Title
 - Footer and attribution
 - Making responsive

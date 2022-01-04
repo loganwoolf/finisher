@@ -12,7 +12,11 @@ const tasks = (() => {
 		const id = knownProperties.id || Math.ceil(Math.random() * 999999)
 		let parentProject = knownProperties.parentProject || projectName
 		let description = knownProperties.description || 'None'
-		const dateCreated = u.offsetTimeByZone(new Date(knownProperties.dateCreated)) || new Date()
+		let dateCreated = new Date()
+		if (knownProperties.dateCreated) {
+			let utcDate = new Date(knownProperties.dateCreated)
+			dateCreated = u.offsetTimeByZone(utcDate)
+		}
 		let dueDate = knownProperties.dueDate || 'None'
 		let priority = knownProperties.priority || false
 		let notes = knownProperties.notes || 'No notes yet'
@@ -88,8 +92,8 @@ const tasks = (() => {
 		}
 	}
 
-	const addTask = ( title, project ) => {
-		const newTask = taskFactory(title, project)
+	const addTask = ( title, project, knownProperties = {} ) => {
+		const newTask = taskFactory(title, project, knownProperties )
 		taskList.push(newTask)
 		return newTask
 	}
