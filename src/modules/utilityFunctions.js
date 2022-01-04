@@ -37,8 +37,9 @@ const utility = (() => {
 
   function offsetTimeByZone (dateObj) {
     const timeZoneAdjustment = dateObj.getTimezoneOffset()
-      return new Date(dateObj.setMinutes(dateObj.getMinutes() + timeZoneAdjustment))
-
+    let outputObj = new Date(dateObj.setMinutes(dateObj.getMinutes() + timeZoneAdjustment))
+    
+    return outputObj
   }
 
   return { 

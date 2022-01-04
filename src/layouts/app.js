@@ -101,7 +101,6 @@ if ( JSON.parse(localStorage.getItem('taskList')) === null
 	projectLayout.renderProjectTabs()
 	// render tasks
 	taskLayout.renderCurrentTasks(taskLayout.state.currentProject)
-	taskLayout.setLocalStorage()
 
 	// create layoutElement to pass to index.js
 	const layoutElement = document.createElement('main')
