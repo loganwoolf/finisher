@@ -37,7 +37,7 @@ const app = (() => {
 
 		// remove active project tab class from previous tab
 		const previousProjectTab = document.querySelector('.active-project-tab')
-		previousProjectTab.classList.remove('active-project-tab')
+		previousProjectTab?.classList.remove('active-project-tab')
 
 		// apply active project tab style
 		e.target.classList.add('active-project-tab')
