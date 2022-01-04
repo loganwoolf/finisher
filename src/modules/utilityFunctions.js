@@ -35,11 +35,17 @@ const utility = (() => {
 		this.style.width = (this.value.length + 2) + 'ch'
 	}
 
+  function offsetTimeByZone (dateObj) {
+    const timeZoneAdjustment = dateObj.getTimezoneOffset()
+    return dateObj.setMinutes(dateObj.getMinutes() + timeZoneAdjustment)
+  }
+
   return { 
     camelToSnake,
     camelToHeadline,
     padZero,
     growInputField,
+    offsetTimeByZone,
   }
   
 })()
