@@ -104,6 +104,32 @@ const taskLayout = ( () => {
 		})
 	}
 
+	function deleteTask (e) {
+		const taskId = e.target.parentNode.parentNode.dataset.id
+		console.log(tasks.taskList)
+		tasks.taskList.find( (obj, index) => {
+			if (obj.id == taskId) {
+				tasks.taskList.splice(index, 1)
+				return true
+			}
+		})
+		console.log(tasks.taskList)
+
+		
+		renderCurrentTasks(state.currentProject)
+		setLocalStorage()
+	}
+
+	function addTaskDeleteButton (parentElement, task) {
+		const deleteButton = document.createElement('button')
+		deleteButton.classList.add('delete-button')
+
+		deleteButton.innerText = '🗑'
+		parentElement.appendChild(deleteButton)
+		
+		deleteButton.addEventListener('click', deleteTask)
+	}
+
   function renderSingleTask (task) {
 
 		const taskElement = document.createElement('div')
@@ -173,6 +199,8 @@ const taskLayout = ( () => {
 		expandButton.addEventListener('click', () => {
 			taskDetails.classList.toggle('hidden')
 		})
+
+		addTaskDeleteButton(taskDetails, task)
 	}
 
 	function createNewTask () {
@@ -212,6 +240,7 @@ const taskLayout = ( () => {
 	}
 
 	function renderCurrentTasks (currentProject) {
+		currentTasks.replaceChildren()
 		tasks.taskList.forEach( (task) => {
 			if (task.parentProject === currentProject.name) {
 				renderSingleTask(task)

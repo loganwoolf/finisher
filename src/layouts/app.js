@@ -8,7 +8,7 @@ import { utility as u } from "../modules/utilityFunctions";
 const app = (() => {
 
   function addProjectTabListener () {
-    projectLayout.tabs.addEventListener('click', determineButtonAction)
+    projectLayout.tabs.addEventListener('click', determineProjectButtonAction)
   }
 
 	function switchActiveProject (e) {
@@ -78,7 +78,7 @@ const app = (() => {
 
 	}
 
-	function determineButtonAction (e) {
+	function determineProjectButtonAction (e) {
 		// check that only a project button was clicked
 		if (e.target.dataset.project) {
 			switchActiveProject(e)
