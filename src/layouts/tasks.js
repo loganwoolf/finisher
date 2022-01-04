@@ -99,6 +99,8 @@ const taskLayout = ( () => {
 			propertyElement.innerText = currentTask.description
 			propertyElement.classList.toggle('hidden')
 			editButton.classList.toggle('hidden')
+
+			setLocalStorage()
 		})
 	}
 
@@ -194,6 +196,7 @@ const taskLayout = ( () => {
 			// remove new task button and create another at the bottom
 			newTaskButton.remove()
 			renderCreateTaskElement()
+			setLocalStorage()
 		})
 		
 	}
@@ -217,6 +220,24 @@ const taskLayout = ( () => {
 		renderCreateTaskElement()
 
 	}
+
+	function setLocalStorage () {
+    const taskListSerialized = JSON.stringify(tasks.taskList)
+		localStorage.setItem('taskList', taskListSerialized)
+  }
+
+	function getLocalStorage () {
+		const taskListDeserialized = JSON.parse(localStorage.getItem('taskList'))
+		taskListDeserialized.forEach(task => {
+			tasks.addTask(task.title, task.parentProject, task)
+			if ( projects.projectList.filter(project => project.name === task.parentProject).length === 0 ) {
+					projects.addProject(task.parentProject)
+				}
+		})
+	}
+
+
+	setLocalStorage()
 
 	// render tasks 
 	const currentTasks = document.createElement('div')
