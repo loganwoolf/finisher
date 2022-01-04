@@ -1,5 +1,6 @@
 import { projects } from "../modules/createProject";
 import { projectLayout } from "./projects";
+import { tasks } from "../modules/createTask";
 import { taskLayout } from "./tasks";
 import { utility as u } from "../modules/utilityFunctions";
 
@@ -85,6 +86,22 @@ const app = (() => {
 			createNewProject(e)
 		}
 	}
+
+	// check for localStorage entry
+if ( JSON.parse(localStorage.getItem('taskList')) === null
+	|| JSON.parse(localStorage.getItem('taskList')).length === 0 ) {
+	projects.addProject('Main')
+	tasks.addTask('Do Odin', 'Main')
+} else {
+	taskLayout.getLocalStorage()
+}
+	taskLayout.state.updateCurrentProject(0)
+
+	// render project tabs
+	projectLayout.renderProjectTabs()
+	// render tasks
+	taskLayout.renderCurrentTasks(taskLayout.state.currentProject)
+	taskLayout.setLocalStorage()
 
 	// create layoutElement to pass to index.js
 	const layoutElement = document.createElement('main')

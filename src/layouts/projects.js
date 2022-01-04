@@ -1,10 +1,10 @@
 import { projects } from "../modules/createProject"
 
 // conditionally render default projects
-if (projects.projectList.length === 0) {
-	projects.addProject('Main')
-	projects.addProject('Personal')
-}
+// if (projects.projectList.length === 0) {
+// 	projects.addProject('Main')
+// 	projects.addProject('Personal')
+// }
 
 const projectLayout = (() => {
 
@@ -42,7 +42,6 @@ const projectLayout = (() => {
 	// render project tabs
 	const tabs = document.createElement('div')
 	tabs.classList.add('project-tabs')
-	renderProjectTabs()
 
   return { tabs, renderProjectTabs }
 })()

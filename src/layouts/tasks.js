@@ -3,12 +3,12 @@ import { tasks } from "../modules/createTask"
 import { utility as u } from "../modules/utilityFunctions"
 
 // conditionally render default tasks
-if (tasks.taskList.length === 0) {
-  tasks.addTask('Do Odin', 'Main')
-	tasks.addTask('Do Lighthouse', 'Main')
-	tasks.addTask('Get busy', 'Personal')
-	tasks.addTask('Go crazy', 'Personal')
-}
+// if (tasks.taskList.length === 0) {
+//   tasks.addTask('Do Odin', 'Main')
+// 	tasks.addTask('Do Lighthouse', 'Main')
+// 	tasks.addTask('Get busy', 'Personal')
+// 	tasks.addTask('Go crazy', 'Personal')
+// }
 
 const taskLayout = ( () => {
 
@@ -237,14 +237,12 @@ const taskLayout = ( () => {
 	}
 
 
-	setLocalStorage()
 
 	// render tasks 
 	const currentTasks = document.createElement('div')
 	currentTasks.classList.add('task-list')
-	renderCurrentTasks(state.currentProject)
 
-  return { currentTasks, state, renderCurrentTasks }
+  return { currentTasks, state, renderCurrentTasks, getLocalStorage, setLocalStorage }
 
 } ) ()
 
