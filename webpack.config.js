@@ -15,7 +15,7 @@ module.exports = {
    },
    plugins: [
       new HtmlWebpackPlugin({
-         title: 'Web App Title', // change me
+         title: 'Finisher', // change me
          favicon: 'images/favicon.svg'
       }),
    ],
