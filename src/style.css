@@ -144,8 +144,8 @@ p {
   opacity: 1;
   transform: rotate(100deg);
 }
-.task-details > button { 
-  /* buttons at bottom of task details view */
+.delete-button { 
+  /* buttons at bottom of project view and task details view */
   background: unset;
   border: 2px solid grey;
   margin-left: auto;

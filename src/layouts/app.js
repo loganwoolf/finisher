@@ -16,7 +16,7 @@ const app = (() => {
 		let elementNumber = [...e.target.parentNode.children].indexOf(e.target)
 		// remove active project tab class from previous tab
 		const previousProjectTab = document.querySelector('.active-project-tab')
-		previousProjectTab.classList.remove('active-project-tab')
+		previousProjectTab?.classList.remove('active-project-tab')
 
 		// update state to new project
 		taskLayout.state.updateCurrentProject(elementNumber)

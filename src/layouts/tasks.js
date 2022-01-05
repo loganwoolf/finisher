@@ -126,8 +126,9 @@ const taskLayout = ( () => {
 		setLocalStorage()
 	}
 
-	function addTaskDeleteButton (parentElement, task) {
+	function renderTaskDeleteButton (parentElement, task) {
 		const deleteButton = document.createElement('button')
+		deleteButton.classList.add('delete-button')
 		deleteButton.classList.add('task-delete-button')
 		deleteButton.classList.add('pop-out')
 		deleteButton.classList.add('animate-out')
@@ -136,6 +137,37 @@ const taskLayout = ( () => {
 		parentElement.appendChild(deleteButton)
 		
 		deleteButton.addEventListener('click', deleteTask)
+	}
+
+	function deleteProject (e) {
+		// select project tab and get name
+		const currentProjectTab = document.querySelector('.active-project-tab')
+		const currentProjectName = currentProjectTab.dataset.project
+
+		// delete all tasks associated with project in reverse order
+		for (let taskIndex = tasks.taskList.length - 1; taskIndex >= 0; taskIndex--) {
+			if (tasks.taskList[taskIndex].parentProject === currentProjectName) {
+				tasks.taskList.splice(taskIndex, 1)
+			}
+		}
+		setLocalStorage()
+		// delete project tab
+		currentProjectTab.remove()
+		// click first button in project layout
+		document.querySelector('.project-tabs').firstChild.click()
+	}
+
+	function renderProjectDeleteButton (parentElement) {
+		const deleteButton = document.createElement('button')
+		deleteButton.classList.add('delete-button')
+		deleteButton.classList.add('project-delete-button')
+		deleteButton.classList.add('pop-out')
+		deleteButton.classList.add('animate-out')
+
+		deleteButton.innerText = '🗑'
+		parentElement.appendChild(deleteButton)
+
+		deleteButton.addEventListener('click', deleteProject)
 	}
 
   function renderSingleTask (task) {
@@ -208,7 +240,7 @@ const taskLayout = ( () => {
 			taskDetails.classList.toggle('hidden')
 		})
 
-		addTaskDeleteButton(taskDetails, task)
+		renderTaskDeleteButton(taskDetails, task)
 	}
 
 	function createNewTask () {
@@ -256,8 +288,9 @@ const taskLayout = ( () => {
 		})
 
 		renderCreateTaskElement()
-
+		renderProjectDeleteButton(currentTasks)
 	}
+
 
 	function setLocalStorage () {
     const taskListSerialized = JSON.stringify(tasks.taskList)
