@@ -140,6 +140,12 @@ const taskLayout = ( () => {
 	}
 
 	function deleteProject (e) {
+		const tabList = document.querySelectorAll('.project-tab')
+		console.log(tabList.length)
+		if (tabList.length < 3) {
+			alert("Can't delete the last project. Create a new project first.")
+			return undefined
+		}
 		// select project tab and get name
 		const currentProjectTab = document.querySelector('.active-project-tab')
 		const currentProjectName = currentProjectTab.dataset.project
