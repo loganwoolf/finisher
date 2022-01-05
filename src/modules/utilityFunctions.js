@@ -23,6 +23,20 @@ const utility = (() => {
     return output.join('')
   }
 
+  function headlineToTaskMethods (str) {
+    let split = str.split(' ')
+    let setterString = `new${split.join('')}`
+    
+    split[0] = split[0].toLowerCase()
+    let getterString = split.join('')
+    console.log(getterString)
+    
+    return {
+      getter: getterString,
+      setter: setterString
+    }
+  }
+
   function padZero (num) {
     if (num.toString().length === 1) {
       return `0${num}`
@@ -45,6 +59,7 @@ const utility = (() => {
   return { 
     camelToSnake,
     camelToHeadline,
+    headlineToTaskMethods,
     padZero,
     growInputField,
     offsetTimeByZone,

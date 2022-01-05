@@ -92,11 +92,17 @@ const taskLayout = ( () => {
 
 			// select current task using data-id (created on edit button)
 			const currentTask = tasks.taskList.filter(task => task.id === +this.dataset.id)[0]
-			currentTask.newDescription = inputField.value
+			const propertyName = e.target.parentNode.firstChild.innerText
+			const property = u.headlineToTaskMethods(propertyName)
+			// returns and object containing setter and getter names
+			// for current task property
+			// access using task[property.setter] (task.newDescription)
+			// or task[property.getter] (task.description)
+			currentTask[property.setter] = inputField.value
 
 			// restore hidden elements and display property
 			inputForm.remove()
-			propertyElement.innerText = currentTask.description
+			propertyElement.innerText = currentTask[property.getter]
 			propertyElement.classList.toggle('hidden')
 			editButton.classList.toggle('hidden')
 
