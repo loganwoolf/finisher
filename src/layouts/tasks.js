@@ -266,6 +266,11 @@ const taskLayout = ( () => {
 			newTaskButton.remove()
 			renderCreateTaskElement()
 			setLocalStorage()
+
+			// move project delete button to bottom
+			const deleteButton = document.querySelector('.project-delete-button')
+			deleteButton.remove()
+			renderProjectDeleteButton(document.querySelector('.task-list'))
 		})
 		
 	}
