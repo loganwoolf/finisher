@@ -136,6 +136,21 @@ p {
 .task-action button {
   border: none;
   background: none;
+  opacity: 0.4;
+  transition: all 0.08s ease-in-out;
+  font-size: 1.3rem;
+}
+.task-action button:hover {
+  opacity: 1;
+  transform: rotate(100deg);
+}
+.task-details > button { 
+  /* buttons at bottom of task details view */
+  background: unset;
+  border: 2px solid grey;
+  margin-left: auto;
+  min-width: 3.5rem;
+  font-size: 1.3rem;
 }
 .create-task {
   font-family: sans-serif;

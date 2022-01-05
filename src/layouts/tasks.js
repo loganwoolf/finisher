@@ -122,7 +122,9 @@ const taskLayout = ( () => {
 
 	function addTaskDeleteButton (parentElement, task) {
 		const deleteButton = document.createElement('button')
-		deleteButton.classList.add('delete-button')
+		deleteButton.classList.add('task-delete-button')
+		deleteButton.classList.add('pop-out')
+		deleteButton.classList.add('animate-out')
 
 		deleteButton.innerText = '🗑'
 		parentElement.appendChild(deleteButton)
@@ -165,13 +167,13 @@ const taskLayout = ( () => {
 		expandButton.innerText = '🔍'
 		topContainer.appendChild(expandButton)
 
-
+		// create task detail container
 		const taskDetails = document.createElement('div')
 		taskDetails.classList.add('task-details')
 		taskDetails.classList.add('hidden')
 		taskElement.appendChild(taskDetails)
 		
-
+		// draw task details
 		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject))
 		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id))
 		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id))
