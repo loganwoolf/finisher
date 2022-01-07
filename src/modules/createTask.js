@@ -17,7 +17,11 @@ const tasks = (() => {
 			let utcDate = new Date(knownProperties.dateCreated)
 			dateCreated = u.offsetTimeByZone(utcDate)
 		}
-		let dueDate = knownProperties.dueDate || 'None'
+		let dueDate = 'None'
+		if (knownProperties.dueDate && knownProperties.dueDate !== 'None') {
+			let utcDate = new Date(knownProperties.dueDate)
+			dueDate = u.offsetTimeByZone(utcDate)
+		}
 		let priority = knownProperties.priority || false
 		let notes = knownProperties.notes || 'No notes yet'
 		let checklist = knownProperties.checklist || []
@@ -63,7 +67,9 @@ const tasks = (() => {
 			},
 
 			get dueDate() {
-				return dueDate
+				return typeof dueDate === 'object' 
+					? `${dueDate.getFullYear()}-${u.padZero(dueDate.getMonth() + 1)}-${u.padZero(dueDate.getDate())}`
+					: 'None'
 			},
 			set newDueDate(newDueDate) {
 				dueDate = newDueDate

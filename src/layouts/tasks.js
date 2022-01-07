@@ -41,12 +41,14 @@ const taskLayout = ( () => {
 		propertyValue.innerText = property
 		propertyLabelContainer.appendChild(propertyValue)
 
+		// create action container (append as needed)
+		const propertyActionContainer = document.createElement('div')
+		propertyActionContainer.classList.add('task-action')
+
 		// create edit buttons for text field properties
 		const editableTextProperties = ['description', 'notes']
 		if ( editableTextProperties.includes(propertyName)) {
-			// create action container (should be placed on every element)
-			const propertyActionContainer = document.createElement('div')
-			propertyActionContainer.classList.add('task-action')
+
 			// create edit button
 			const editButton = document.createElement('button')
 			// apply data-id of current task to pass to event handler
@@ -58,6 +60,36 @@ const taskLayout = ( () => {
 			propertyContainer.appendChild(propertyActionContainer)
 
 			editButton.addEventListener('click', editTextContents)
+		}
+
+		// create edit button for date field properties
+		const editableDateProperties = ['dueDate']
+		if (editableDateProperties.includes(propertyName)) {
+			const dateInputLabel = document.createElement('label')
+			dateInputLabel.for = 'due-date'
+			dateInputLabel.dataset.id = taskId
+			dateInputLabel.innerText = '📆'
+			
+			const dateForm = document.createElement('form')
+			const dateInput = document.createElement('input')
+			dateInput.type = 'date'
+			dateInput.id = 'due-date'
+			dateForm.appendChild(dateInput)
+			
+			propertyActionContainer.appendChild(dateInputLabel)
+			propertyContainer.appendChild(propertyActionContainer)
+
+			dateInputLabel.onclick = () => {
+				propertyValue.parentElement.replaceChild(dateForm, propertyValue)
+			}
+			
+			dateForm.oninput = () => {
+				// update task with dueDate property, store date to element
+				propertyValue.innerText = editDueDate(dateInput.valueAsDate, taskId)
+				
+				// replace dateForm with propertyValue element
+				dateForm.parentElement.replaceChild(propertyValue, dateForm)				
+			}
 		}
 		
 		return propertyContainer
@@ -110,17 +142,24 @@ const taskLayout = ( () => {
 		})
 	}
 
+	function editDueDate (dateObj, taskId) {
+		// select current task using taskId
+		const currentTask = tasks.taskList.filter(task => task.id === taskId)[0]
+		currentTask.newDueDate = u.offsetTimeByZone(dateObj)
+
+		setLocalStorage()
+		// return date string from task
+		return currentTask.dueDate
+	}
+
 	function deleteTask (e) {
 		const taskId = e.target.parentNode.parentNode.dataset.id
-		console.log(tasks.taskList)
 		tasks.taskList.find( (obj, index) => {
 			if (obj.id == taskId) {
 				tasks.taskList.splice(index, 1)
 				return true
 			}
 		})
-		console.log(tasks.taskList)
-
 		
 		renderCurrentTasks(state.currentProject)
 		setLocalStorage()
@@ -301,7 +340,6 @@ const taskLayout = ( () => {
 		renderCreateTaskElement()
 		renderProjectDeleteButton(currentTasks)
 	}
-
 
 	function setLocalStorage () {
     const taskListSerialized = JSON.stringify(tasks.taskList)

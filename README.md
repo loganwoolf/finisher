@@ -18,14 +18,15 @@ This project has not yet deployed, and can only be run in the development enviro
 - Switch projects
 - Add a task description
 - Add task notes
+- Edit due date of task
 - Creating new projects
 - Mark task as done
 - Persist with localstorage
+- Delete tasks
+- Delete projects
 
 ### Not Yet Implemented
 - Switch to (un)see completed tasks
-- Delete tasks
-- Delete projects
 - Edit details of tasks
 - Move tasks to different projects
 - See priority in overview
