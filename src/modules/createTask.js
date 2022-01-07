@@ -1,3 +1,4 @@
+import { taskLayout } from "../layouts/tasks"
 import { utility as u } from "./utilityFunctions"	
 
 const tasks = (() => {
@@ -65,11 +66,19 @@ const tasks = (() => {
 			get dateCreated() {
 				return `${dateCreated.getFullYear()}-${u.padZero(dateCreated.getMonth() + 1)}-${u.padZero(dateCreated.getDate())}`
 			},
+			get dateCreatedAsDate() {
+				return dateCreated
+			},
 
 			get dueDate() {
 				return typeof dueDate === 'object' 
 					? `${dueDate.getFullYear()}-${u.padZero(dueDate.getMonth() + 1)}-${u.padZero(dueDate.getDate())}`
 					: 'None'
+			},
+			get dueDateAsDate() {
+				return typeof dueDate === 'object'
+					? dueDate
+					: undefined
 			},
 			set newDueDate(newDueDate) {
 				dueDate = newDueDate

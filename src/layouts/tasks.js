@@ -81,6 +81,7 @@ const taskLayout = ( () => {
 
 			dateInputLabel.onclick = () => {
 				propertyValue.parentElement.replaceChild(dateForm, propertyValue)
+				dateInput.focus()
 			}
 			
 			dateForm.oninput = () => {
@@ -148,6 +149,12 @@ const taskLayout = ( () => {
 		currentTask.newDueDate = u.offsetTimeByZone(dateObj)
 
 		setLocalStorage()
+
+		// compute days to due date (not yet used)
+		// console.log(
+		// 	Math.ceil( ( currentTask.dueDateAsDate - currentTask.dateCreatedAsDate ) / 3600 / 1000 / 24 )
+		// )
+		
 		// return date string from task
 		return currentTask.dueDate
 	}
@@ -355,8 +362,6 @@ const taskLayout = ( () => {
 				}
 		})
 	}
-
-
 
 	// render tasks 
 	const currentTasks = document.createElement('div')
