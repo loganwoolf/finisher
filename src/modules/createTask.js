@@ -101,8 +101,11 @@ const tasks = (() => {
 			get checklist() {
 				return checklist
 			},
+			get lastChecklist() {
+				return checklist[checklist.length-1]
+			},
 			set newChecklist(newChecklist) {
-				checklist = newChecklist
+				checklist.push(newChecklist)
 			},
 		}
 	}
