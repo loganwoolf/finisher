@@ -92,6 +92,23 @@ const taskLayout = ( () => {
 				dateForm.parentElement.replaceChild(propertyValue, dateForm)				
 			}
 		}
+
+		const editableListProperties = ['checklist']
+		if (editableListProperties.includes(propertyName)) {
+			// create list container and remove propertyValue element (p)
+			const listContainer = document.createElement('div')
+			listContainer.classList.add('property-value', 'checklist')
+			propertyLabelContainer.replaceChild(listContainer, propertyValue)
+			
+			// create button to add item to checklist
+			const listInputLabel = document.createElement('button')
+			listInputLabel.innerText = '➕'
+
+			propertyActionContainer.appendChild(listInputLabel)
+			propertyContainer.appendChild(propertyActionContainer)
+
+			listInputLabel.addEventListener('click', () => addListItem(listContainer ,taskId))
+		}
 		
 		return propertyContainer
 	}
@@ -157,6 +174,19 @@ const taskLayout = ( () => {
 		
 		// return date string from task
 		return currentTask.dueDate
+	}
+
+	function addListItem (listContainer, taskId) {
+		console.log(listContainer)
+		console.log(taskId)
+
+		// create input field to type list item content into
+		
+		// add list item content to checklist property on task object
+		
+		// create new checklist, action elements in a container 
+
+		// add text to element from checklist property on task object 
 	}
 
 	function deleteTask (e) {
