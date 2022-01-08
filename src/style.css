@@ -3,9 +3,13 @@
 }
 
 body {
+  margin: 0;
   font-family: sans-serif;
   /* prevent jumping when app is longer than screen */
   overflow-y: scroll;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  min-height: 100vh;
 }
 p {
   margin: 0;
