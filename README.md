@@ -24,13 +24,13 @@ This project has not yet deployed, and can only be run in the development enviro
 - Persist with localstorage
 - Delete tasks
 - Delete projects
+- Checklist for task steps
+- Edit details of tasks
 
 ### Not Yet Implemented
 - Switch to (un)see completed tasks
-- Edit details of tasks
 - Move tasks to different projects
 - See priority in overview
-- Checklist for task steps
 - Title
 - Footer and attribution
 - Making responsive

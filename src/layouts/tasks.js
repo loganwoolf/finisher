@@ -62,6 +62,28 @@ const taskLayout = ( () => {
 			editButton.addEventListener('click', editTextContents)
 		}
 
+		// create toggle button for task priority
+		const editablePriorityProperties = ['priority']
+		if (editablePriorityProperties.includes(propertyName)) {
+			// set propertyValue text based on urgency
+			const [URGENT, NORMAL] = ['Urgent', 'Normal']
+			task.priority ? propertyValue.innerText = "Urgent" : propertyValue.innerText = "Normal"
+
+			// create toggle button for urgency
+			const priorityButton = document.createElement('button')
+			task.priority ? priorityButton.innerText = '😱' : priorityButton.innerText = '🥱'
+			propertyActionContainer.appendChild(priorityButton)
+			propertyContainer.appendChild(propertyActionContainer)
+
+			// toggle urgency with button click
+			priorityButton.onclick = () => {
+				task.newPriority = !task.priority
+				setLocalStorage()
+				task.priority ? priorityButton.innerText = '😱' : priorityButton.innerText = '🥱'
+				task.priority ? propertyValue.innerText = URGENT: propertyValue.innerText = NORMAL
+			}
+		}
+
 		// create edit button for date field properties
 		const editableDateProperties = ['dueDate']
 		if (editableDateProperties.includes(propertyName)) {
