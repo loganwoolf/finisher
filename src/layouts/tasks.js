@@ -136,7 +136,7 @@ const taskLayout = ( () => {
 			newChecklistItemButton.addEventListener('click', function listen (e) {
 				// remove event listener from button
 				newChecklistItemButton.removeEventListener('click', listen)
-				addListItem(listContainer ,taskId, e)
+				addListItem(e, listContainer, task)
 			})
 		}
 		
@@ -209,7 +209,7 @@ const taskLayout = ( () => {
 		return checkListItem
 	}
 
-	function addListItem (listContainer, taskId, e) {
+	function addListItem (e, listContainer, task) {
 		let button = e.target
 
 		// create input field to type list item content into
@@ -221,8 +221,6 @@ const taskLayout = ( () => {
 		inputField.focus()
 
 		// add list item content to checklist property on task object
-		const task = tasks.taskList.find( obj => obj.id === taskId )
-
 		inputForm.onsubmit = (e) => {
 			e.preventDefault()
 			// write form value to task object
@@ -236,7 +234,7 @@ const taskLayout = ( () => {
 			button.addEventListener('click', function listen (e) {
 				// remove event listener from button when clicked
 				button.removeEventListener('click', listen)
-				addListItem(listContainer ,taskId, e)
+				addListItem(e, listContainer, task)
 			})
 		}
 	}
