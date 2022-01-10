@@ -96,9 +96,12 @@ const taskLayout = ( () => {
 		const editableListProperties = ['checklist']
 		if (editableListProperties.includes(propertyName)) {
 			// create list container and remove propertyValue element (p)
-			const listContainer = document.createElement('div')
+			const listContainer = document.createElement('ol')
 			listContainer.classList.add('property-value', 'checklist')
 			propertyLabelContainer.replaceChild(listContainer, propertyValue)
+
+			// render all existing items from localstorage
+			property.forEach(item => listContainer.appendChild(createListItemElement(item)))
 			
 			// create button to add item to checklist
 			const newChecklistItemButton = document.createElement('button')
@@ -181,6 +184,29 @@ const taskLayout = ( () => {
 		return currentTask.dueDate
 	}
 
+	function createListItemElement (itemText) {
+		// creates a single checklist item
+		// may pass in text from localStorage in a for each function or
+		// by reading from a task object
+
+		// create new checklist and action elements in a container 
+		const checkListItem = document.createElement('li')
+		checkListItem.classList.add('checklist-item-container')
+		const checkListValue = document.createElement('p')
+		checkListValue.classList.add('checklist-item')
+		const checkListActionContainer = document.createElement('div')
+		checkListActionContainer.classList.add('checklist-actions')
+
+		// add text to element from checklist property on task object 
+		checkListValue.innerText = itemText
+
+		// replace form with updated task element
+		checkListItem.appendChild(checkListValue)
+		checkListItem.appendChild(checkListActionContainer)
+
+		return checkListItem
+	}
+
 	function addListItem (listContainer, taskId, e) {
 		let button = e.target
 
@@ -197,24 +223,12 @@ const taskLayout = ( () => {
 
 		inputForm.onsubmit = (e) => {
 			e.preventDefault()
+			// write form value to task object
 			task.newChecklist = inputField.value
 
-			// create new checklist, action elements in a container 
-			const checkListItem = document.createElement('div')
-			checkListItem.classList.add('checklist-item-container')
-			const checkListValue = document.createElement('p')
-			checkListValue.classList.add('checklist-item')
-			const checkListActionContainer = document.createElement('div')
-			checkListActionContainer.classList.add('checklist-actions')
-
-			// add text to element from checklist property on task object 
-			checkListValue.innerText = task.lastChecklist
+			// replace form with checklist value
+			listContainer.replaceChild(createListItemElement(task.lastChecklist), inputForm)
 			setLocalStorage()
-			
-			// replace form with updated task element
-			checkListItem.appendChild(checkListValue)
-			checkListItem.appendChild(checkListActionContainer)
-			listContainer.replaceChild(checkListItem, inputForm)
 
 			// add event listener back to button for more checklist items
 			button.addEventListener('click', function listen (e) {
