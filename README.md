@@ -36,3 +36,6 @@ This project has not yet deployed, and can only be run in the development enviro
 - Making responsive
 - A big style overhaul
 
+## Notes
+- A large refactor is needed to clean up the tasks.js file. This module has grown much 
+  larger than its counterparts. A new layout for task properties is probably in order.
