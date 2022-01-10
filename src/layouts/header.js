@@ -1,7 +1,7 @@
 
 
 const header = ( () => {
-  const APPTITLE = 'FINISHER'
+  const APPTITLE = 'finisher'
   const SUBTITLE = 'Getting your tasks DONE!'
 
   const element = document.createElement('header')
@@ -14,7 +14,7 @@ const header = ( () => {
 
 
   element.appendChild(appTitle)
-  element.append(subTitle)
+  // element.append(subTitle)
 
 
   return { element }
