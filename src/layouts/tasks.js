@@ -17,7 +17,7 @@ const taskLayout = ( () => {
 		updateCurrentProject: (elementNumber) => state.currentProject = projects.projectList[elementNumber]
 	}
 
-	function buildTaskProperty (propertyName, property, taskId) {
+	function buildTaskProperty (propertyName, property, taskId, task) {
 
 		// create property element
 		const propertyContainer = document.createElement('div')
@@ -41,12 +41,14 @@ const taskLayout = ( () => {
 		propertyValue.innerText = property
 		propertyLabelContainer.appendChild(propertyValue)
 
+		// create action container (append as needed)
+		const propertyActionContainer = document.createElement('div')
+		propertyActionContainer.classList.add('task-action')
+
 		// create edit buttons for text field properties
 		const editableTextProperties = ['description', 'notes']
 		if ( editableTextProperties.includes(propertyName)) {
-			// create action container (should be placed on every element)
-			const propertyActionContainer = document.createElement('div')
-			propertyActionContainer.classList.add('task-action')
+
 			// create edit button
 			const editButton = document.createElement('button')
 			// apply data-id of current task to pass to event handler
@@ -57,70 +59,194 @@ const taskLayout = ( () => {
 			propertyActionContainer.appendChild(editButton)
 			propertyContainer.appendChild(propertyActionContainer)
 
-			editButton.addEventListener('click', editTextContents)
+			editButton.onclick = (e) => editTextContents(e, propertyValue, task)
+		}
+
+		// create toggle button for task priority
+		const editablePriorityProperties = ['priority']
+		if (editablePriorityProperties.includes(propertyName)) {
+			// set propertyValue text based on urgency
+			const [URGENT, NORMAL] = ['Urgent', 'Normal']
+			task.priority ? propertyValue.innerText = "Urgent" : propertyValue.innerText = "Normal"
+
+			// create toggle button for urgency
+			const priorityButton = document.createElement('button')
+			task.priority ? priorityButton.innerText = '😱' : priorityButton.innerText = '🥱'
+			propertyActionContainer.appendChild(priorityButton)
+			propertyContainer.appendChild(propertyActionContainer)
+
+			// toggle urgency with button click
+			priorityButton.onclick = () => {
+				task.newPriority = !task.priority
+				setLocalStorage()
+				task.priority ? priorityButton.innerText = '😱' : priorityButton.innerText = '🥱'
+				task.priority ? propertyValue.innerText = URGENT: propertyValue.innerText = NORMAL
+			}
+		}
+
+		// create edit button for date field properties
+		const editableDateProperties = ['dueDate']
+		if (editableDateProperties.includes(propertyName)) {
+			const dateInputLabel = document.createElement('label')
+			dateInputLabel.for = 'due-date'
+			dateInputLabel.dataset.id = taskId
+			dateInputLabel.innerText = '📆'
+			
+			const dateForm = document.createElement('form')
+			const dateInput = document.createElement('input')
+			dateInput.type = 'date'
+			dateInput.id = 'due-date'
+			dateForm.appendChild(dateInput)
+			
+			propertyActionContainer.appendChild(dateInputLabel)
+			propertyContainer.appendChild(propertyActionContainer)
+
+			dateInputLabel.onclick = () => {
+				propertyValue.parentElement.replaceChild(dateForm, propertyValue)
+				dateInput.focus()
+			}
+			
+			dateForm.oninput = () => {
+				task.newDueDate = u.offsetTimeByZone(dateInput.valueAsDate)
+				setLocalStorage()
+				
+				propertyValue.innerText = task.dueDate
+				dateForm.parentElement.replaceChild(propertyValue, dateForm)
+			}
+		}
+
+		const editableListProperties = ['checklist']
+		if (editableListProperties.includes(propertyName)) {
+			// create list container and remove propertyValue element (p)
+			const listContainer = document.createElement('ol')
+			listContainer.classList.add('property-value', 'checklist')
+			propertyLabelContainer.replaceChild(listContainer, propertyValue)
+
+			// render all existing items from localstorage
+			property.forEach(item => listContainer.appendChild(createListItemElement(item)))
+			
+			// create button to add item to checklist
+			const newChecklistItemButton = document.createElement('button')
+			newChecklistItemButton.classList.add('btn-add-checklist-item')
+			newChecklistItemButton.innerText = '➕'
+
+			propertyActionContainer.appendChild(newChecklistItemButton)
+			propertyContainer.appendChild(propertyActionContainer)
+
+			newChecklistItemButton.addEventListener('click', function listen (e) {
+				// remove event listener from button
+				newChecklistItemButton.removeEventListener('click', listen)
+				addListItem(e, listContainer, task)
+			})
 		}
 		
 		return propertyContainer
 	}
 
-	function editTextContents (e) {
+	function editTextContents (e, propertyValue, task) {
 		// hide edit button
 		const editButton = e.target
 		editButton.classList.toggle('hidden')
 
-		// create form and text area for input
-		// get current property's value element
-		const propertyElement = e.target.parentNode.parentNode.firstChild.lastChild
-		// create input form over value element
+		// create input form over propertyValue element
 		const inputForm = document.createElement('form')
-		propertyElement.classList.toggle('hidden')
-		propertyElement.parentNode.appendChild(inputForm)
+		propertyValue.classList.toggle('hidden')
+		propertyValue.parentNode.appendChild(inputForm)
 		const inputField = document.createElement('input')
 		// create text placeholder text in form input
-		if (propertyElement.innerText === 'None' || propertyElement.innerText === 'No notes yet' || propertyElement.innerText === '') {
-			const label = propertyElement.parentNode.firstChild.innerText.toLowerCase()
+		if (propertyValue.innerText === 'None' || propertyValue.innerText === 'No notes yet' || propertyValue.innerText === '') {
+			const label = propertyValue.parentNode.firstChild.innerText.toLowerCase()
 			inputField.placeholder = `Add ${label}...`
 		} else {
-			inputField.value = propertyElement.innerText
+			inputField.value = propertyValue.innerText
 		}
 		inputForm.append(inputField)
 		inputField.focus()
 
 		// save text input to task object and render changes
-		inputForm.addEventListener('submit', (e) => {
+		inputForm.onsubmit = (e) => {
 			e.preventDefault()
 
 			// select current task using data-id (created on edit button)
-			const currentTask = tasks.taskList.filter(task => task.id === +this.dataset.id)[0]
 			const propertyName = e.target.parentNode.firstChild.innerText
 			const property = u.headlineToTaskMethods(propertyName)
 			// returns and object containing setter and getter names
 			// for current task property
 			// access using task[property.setter] (task.newDescription)
 			// or task[property.getter] (task.description)
-			currentTask[property.setter] = inputField.value
+			task[property.setter] = inputField.value
 
 			// restore hidden elements and display property
 			inputForm.remove()
-			propertyElement.innerText = currentTask[property.getter]
-			propertyElement.classList.toggle('hidden')
+			propertyValue.innerText = task[property.getter]
+			propertyValue.classList.toggle('hidden')
 			editButton.classList.toggle('hidden')
 
 			setLocalStorage()
-		})
+		}
+	}
+
+	function createListItemElement (itemText) {
+		// creates a single checklist item
+		// may pass in text from localStorage in a for each function or
+		// by reading from a task object
+
+		// create new checklist and action elements in a container 
+		const checkListItem = document.createElement('li')
+		checkListItem.classList.add('checklist-item-container')
+		const checkListValue = document.createElement('p')
+		checkListValue.classList.add('checklist-item')
+		const checkListActionContainer = document.createElement('div')
+		checkListActionContainer.classList.add('checklist-actions')
+
+		// add text to element from checklist property on task object 
+		checkListValue.innerText = itemText
+
+		// replace form with updated task element
+		checkListItem.appendChild(checkListValue)
+		checkListItem.appendChild(checkListActionContainer)
+
+		return checkListItem
+	}
+
+	function addListItem (e, listContainer, task) {
+		let button = e.target
+
+		// create input field to type list item content into
+		const inputForm = document.createElement('form')
+		const inputField = document.createElement('input')
+		inputField.type = 'text'
+		inputForm.appendChild(inputField)
+		listContainer.appendChild(inputForm)
+		inputField.focus()
+
+		// add list item content to checklist property on task object
+		inputForm.onsubmit = (e) => {
+			e.preventDefault()
+			// write form value to task object
+			task.newChecklist = inputField.value
+
+			// replace form with checklist value
+			listContainer.replaceChild(createListItemElement(task.lastChecklist), inputForm)
+			setLocalStorage()
+
+			// add event listener back to button for more checklist items
+			button.addEventListener('click', function listen (e) {
+				// remove event listener from button when clicked
+				button.removeEventListener('click', listen)
+				addListItem(e, listContainer, task)
+			})
+		}
 	}
 
 	function deleteTask (e) {
 		const taskId = e.target.parentNode.parentNode.dataset.id
-		console.log(tasks.taskList)
 		tasks.taskList.find( (obj, index) => {
 			if (obj.id == taskId) {
 				tasks.taskList.splice(index, 1)
 				return true
 			}
 		})
-		console.log(tasks.taskList)
-
 		
 		renderCurrentTasks(state.currentProject)
 		setLocalStorage()
@@ -218,13 +344,13 @@ const taskLayout = ( () => {
 		taskElement.appendChild(taskDetails)
 		
 		// draw task details
-		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject))
-		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id))
-		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id))
-		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate, task.id))
-		taskDetails.appendChild(buildTaskProperty('priority', task.priority, task.id))
-		taskDetails.appendChild(buildTaskProperty('notes', task.notes, task.id))
-		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist, task.id))
+		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject, task))
+		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('priority', task.priority, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('notes', task.notes, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist, task.id, task))
 
 		currentTasks.appendChild(taskElement)
 
@@ -302,7 +428,6 @@ const taskLayout = ( () => {
 		renderProjectDeleteButton(currentTasks)
 	}
 
-
 	function setLocalStorage () {
     const taskListSerialized = JSON.stringify(tasks.taskList)
 		localStorage.setItem('taskList', taskListSerialized)
@@ -317,8 +442,6 @@ const taskLayout = ( () => {
 				}
 		})
 	}
-
-
 
 	// render tasks 
 	const currentTasks = document.createElement('div')

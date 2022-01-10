@@ -1,3 +1,4 @@
+import { taskLayout } from "../layouts/tasks"
 import { utility as u } from "./utilityFunctions"	
 
 const tasks = (() => {
@@ -17,7 +18,11 @@ const tasks = (() => {
 			let utcDate = new Date(knownProperties.dateCreated)
 			dateCreated = u.offsetTimeByZone(utcDate)
 		}
-		let dueDate = knownProperties.dueDate || 'None'
+		let dueDate = 'None'
+		if (knownProperties.dueDate && knownProperties.dueDate !== 'None') {
+			let utcDate = new Date(knownProperties.dueDate)
+			dueDate = u.offsetTimeByZone(utcDate)
+		}
 		let priority = knownProperties.priority || false
 		let notes = knownProperties.notes || 'No notes yet'
 		let checklist = knownProperties.checklist || []
@@ -61,9 +66,19 @@ const tasks = (() => {
 			get dateCreated() {
 				return `${dateCreated.getFullYear()}-${u.padZero(dateCreated.getMonth() + 1)}-${u.padZero(dateCreated.getDate())}`
 			},
+			get dateCreatedAsDate() {
+				return dateCreated
+			},
 
 			get dueDate() {
-				return dueDate
+				return typeof dueDate === 'object' 
+					? `${dueDate.getFullYear()}-${u.padZero(dueDate.getMonth() + 1)}-${u.padZero(dueDate.getDate())}`
+					: 'None'
+			},
+			get dueDateAsDate() {
+				return typeof dueDate === 'object'
+					? dueDate
+					: undefined
 			},
 			set newDueDate(newDueDate) {
 				dueDate = newDueDate
@@ -86,8 +101,11 @@ const tasks = (() => {
 			get checklist() {
 				return checklist
 			},
+			get lastChecklist() {
+				return checklist[checklist.length-1]
+			},
 			set newChecklist(newChecklist) {
-				checklist = newChecklist
+				checklist.push(newChecklist)
 			},
 		}
 	}

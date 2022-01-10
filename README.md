@@ -18,20 +18,24 @@ This project has not yet deployed, and can only be run in the development enviro
 - Switch projects
 - Add a task description
 - Add task notes
+- Edit due date of task
 - Creating new projects
 - Mark task as done
 - Persist with localstorage
+- Delete tasks
+- Delete projects
+- Checklist for task steps
+- Edit details of tasks
 
 ### Not Yet Implemented
 - Switch to (un)see completed tasks
-- Delete tasks
-- Delete projects
-- Edit details of tasks
 - Move tasks to different projects
 - See priority in overview
-- Checklist for task steps
 - Title
 - Footer and attribution
 - Making responsive
 - A big style overhaul
 
+## Notes
+- A large refactor is needed to clean up the tasks.js file. This module has grown much 
+  larger than its counterparts. A new layout for task properties is probably in order.
