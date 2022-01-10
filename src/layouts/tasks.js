@@ -17,7 +17,7 @@ const taskLayout = ( () => {
 		updateCurrentProject: (elementNumber) => state.currentProject = projects.projectList[elementNumber]
 	}
 
-	function buildTaskProperty (propertyName, property, taskId) {
+	function buildTaskProperty (propertyName, property, taskId, task) {
 
 		// create property element
 		const propertyContainer = document.createElement('div')
@@ -344,13 +344,13 @@ const taskLayout = ( () => {
 		taskElement.appendChild(taskDetails)
 		
 		// draw task details
-		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject))
-		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id))
-		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id))
-		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate, task.id))
-		taskDetails.appendChild(buildTaskProperty('priority', task.priority, task.id))
-		taskDetails.appendChild(buildTaskProperty('notes', task.notes, task.id))
-		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist, task.id))
+		taskDetails.appendChild(buildTaskProperty('parentProject', task.parentProject, task))
+		taskDetails.appendChild(buildTaskProperty('description', task.description, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('dateCreated', task.dateCreated, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('dueDate', task.dueDate, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('priority', task.priority, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('notes', task.notes, task.id, task))
+		taskDetails.appendChild(buildTaskProperty('checklist', task.checklist, task.id, task))
 
 		currentTasks.appendChild(taskElement)
 
