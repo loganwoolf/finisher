@@ -59,7 +59,7 @@ const taskLayout = ( () => {
 			propertyActionContainer.appendChild(editButton)
 			propertyContainer.appendChild(propertyActionContainer)
 
-			editButton.addEventListener('click', editTextContents)
+			editButton.onclick = (e) => editTextContents(e, propertyValue, task)
 		}
 
 		// create toggle button for task priority
@@ -143,51 +143,47 @@ const taskLayout = ( () => {
 		return propertyContainer
 	}
 
-	function editTextContents (e) {
+	function editTextContents (e, propertyValue, task) {
 		// hide edit button
 		const editButton = e.target
 		editButton.classList.toggle('hidden')
 
-		// create form and text area for input
-		// get current property's value element
-		const propertyElement = e.target.parentNode.parentNode.firstChild.lastChild
-		// create input form over value element
+		// create input form over propertyValue element
 		const inputForm = document.createElement('form')
-		propertyElement.classList.toggle('hidden')
-		propertyElement.parentNode.appendChild(inputForm)
+		propertyValue.classList.toggle('hidden')
+		propertyValue.parentNode.appendChild(inputForm)
 		const inputField = document.createElement('input')
 		// create text placeholder text in form input
-		if (propertyElement.innerText === 'None' || propertyElement.innerText === 'No notes yet' || propertyElement.innerText === '') {
-			const label = propertyElement.parentNode.firstChild.innerText.toLowerCase()
+		if (propertyValue.innerText === 'None' || propertyValue.innerText === 'No notes yet' || propertyValue.innerText === '') {
+			const label = propertyValue.parentNode.firstChild.innerText.toLowerCase()
 			inputField.placeholder = `Add ${label}...`
 		} else {
-			inputField.value = propertyElement.innerText
+			inputField.value = propertyValue.innerText
 		}
 		inputForm.append(inputField)
 		inputField.focus()
 
 		// save text input to task object and render changes
-		inputForm.addEventListener('submit', (e) => {
+		inputForm.onsubmit = (e) => {
 			e.preventDefault()
 
 			// select current task using data-id (created on edit button)
-			const currentTask = tasks.taskList.filter(task => task.id === +this.dataset.id)[0]
 			const propertyName = e.target.parentNode.firstChild.innerText
 			const property = u.headlineToTaskMethods(propertyName)
 			// returns and object containing setter and getter names
 			// for current task property
 			// access using task[property.setter] (task.newDescription)
 			// or task[property.getter] (task.description)
-			currentTask[property.setter] = inputField.value
+			task[property.setter] = inputField.value
 
 			// restore hidden elements and display property
 			inputForm.remove()
-			propertyElement.innerText = currentTask[property.getter]
-			propertyElement.classList.toggle('hidden')
+			propertyValue.innerText = task[property.getter]
+			propertyValue.classList.toggle('hidden')
 			editButton.classList.toggle('hidden')
 
 			setLocalStorage()
-		})
+		}
 	}
 
 	function createListItemElement (itemText) {
