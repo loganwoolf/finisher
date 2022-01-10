@@ -107,11 +107,11 @@ const taskLayout = ( () => {
 			}
 			
 			dateForm.oninput = () => {
-				// update task with dueDate property, store date to element
-				propertyValue.innerText = editDueDate(dateInput.valueAsDate, taskId)
+				task.newDueDate = u.offsetTimeByZone(dateInput.valueAsDate)
+				setLocalStorage()
 				
-				// replace dateForm with propertyValue element
-				dateForm.parentElement.replaceChild(propertyValue, dateForm)				
+				propertyValue.innerText = task.dueDate
+				dateForm.parentElement.replaceChild(propertyValue, dateForm)
 			}
 		}
 
@@ -188,22 +188,6 @@ const taskLayout = ( () => {
 
 			setLocalStorage()
 		})
-	}
-
-	function editDueDate (dateObj, taskId) {
-		// select current task using taskId
-		const currentTask = tasks.taskList.filter(task => task.id === taskId)[0]
-		currentTask.newDueDate = u.offsetTimeByZone(dateObj)
-
-		setLocalStorage()
-
-		// compute days to due date (not yet used)
-		// console.log(
-		// 	Math.ceil( ( currentTask.dueDateAsDate - currentTask.dateCreatedAsDate ) / 3600 / 1000 / 24 )
-		// )
-		
-		// return date string from task
-		return currentTask.dueDate
 	}
 
 	function createListItemElement (itemText) {
