@@ -2,8 +2,9 @@ import { projects } from "../modules/createProject";
 import { projectLayout } from "./projects";
 import { tasks } from "../modules/createTask";
 import { taskLayout } from "./tasks";
-import { utility as u } from "../modules/utilityFunctions";
+import { utility } from "../modules/utilityFunctions";
 
+const { growInputField } = utility
 
 const app = (() => {
 
@@ -49,7 +50,7 @@ const app = (() => {
 		// create form on button to take input of new project name
 		const field = document.createElement('input')
 		field.type = 'text'
-		field.addEventListener('input', u.growInputField)
+		field.addEventListener('input', growInputField)
 		
 		const form = document.createElement('form')
 		form.appendChild(field)

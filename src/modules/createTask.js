@@ -1,12 +1,12 @@
-import { taskLayout } from "../layouts/tasks"
-import { utility as u } from "./utilityFunctions"	
+import { utility } from "./utilityFunctions"
+
+const { offsetTimeByZone, padZero } = utility
 
 const tasks = (() => {
 	
 	const taskList = []
 
 	const taskFactory = (taskTitle, projectName, knownProperties = {} ) => {
-		
 
 		let title = taskTitle
 		let status = knownProperties.status || false
@@ -16,12 +16,12 @@ const tasks = (() => {
 		let dateCreated = new Date()
 		if (knownProperties.dateCreated) {
 			let utcDate = new Date(knownProperties.dateCreated)
-			dateCreated = u.offsetTimeByZone(utcDate)
+			dateCreated = offsetTimeByZone(utcDate)
 		}
 		let dueDate = 'None'
 		if (knownProperties.dueDate && knownProperties.dueDate !== 'None') {
 			let utcDate = new Date(knownProperties.dueDate)
-			dueDate = u.offsetTimeByZone(utcDate)
+			dueDate = offsetTimeByZone(utcDate)
 		}
 		let priority = knownProperties.priority || false
 		let notes = knownProperties.notes || 'No notes yet'
@@ -64,7 +64,7 @@ const tasks = (() => {
 			},
 
 			get dateCreated() {
-				return `${dateCreated.getFullYear()}-${u.padZero(dateCreated.getMonth() + 1)}-${u.padZero(dateCreated.getDate())}`
+				return `${dateCreated.getFullYear()}-${padZero(dateCreated.getMonth() + 1)}-${padZero(dateCreated.getDate())}`
 			},
 			get dateCreatedAsDate() {
 				return dateCreated
@@ -72,7 +72,7 @@ const tasks = (() => {
 
 			get dueDate() {
 				return typeof dueDate === 'object' 
-					? `${dueDate.getFullYear()}-${u.padZero(dueDate.getMonth() + 1)}-${u.padZero(dueDate.getDate())}`
+					? `${dueDate.getFullYear()}-${padZero(dueDate.getMonth() + 1)}-${padZero(dueDate.getDate())}`
 					: 'None'
 			},
 			get dueDateAsDate() {

@@ -1,6 +1,8 @@
 import { projects } from "../modules/createProject"
 import { tasks } from "../modules/createTask"
-import { utility as u } from "../modules/utilityFunctions"
+import { utility } from "../modules/utilityFunctions"
+
+const { camelToSnake, camelToHeadline, offsetTimeByZone, headlineToTaskMethods } = utility
 
 // conditionally render default tasks
 // if (tasks.taskList.length === 0) {
@@ -22,7 +24,7 @@ const taskLayout = ( () => {
 		// create property element
 		const propertyContainer = document.createElement('div')
 		propertyContainer.classList.add('task-info')
-		propertyContainer.classList.add(`property-${u.camelToSnake(propertyName)}`)
+		propertyContainer.classList.add(`property-${camelToSnake(propertyName)}`)
 		
 		// create property label container
 		const propertyLabelContainer = document.createElement('div')
@@ -32,7 +34,7 @@ const taskLayout = ( () => {
 		// create title element
 		const propertyTitle = document.createElement('p')
 		propertyTitle.classList.add('property-name')
-		propertyTitle.innerText = u.camelToHeadline(propertyName)
+		propertyTitle.innerText = camelToHeadline(propertyName)
 		propertyLabelContainer.appendChild(propertyTitle)
 
 		// create value element
@@ -107,7 +109,7 @@ const taskLayout = ( () => {
 			}
 			
 			dateForm.oninput = () => {
-				task.newDueDate = u.offsetTimeByZone(dateInput.valueAsDate)
+				task.newDueDate = offsetTimeByZone(dateInput.valueAsDate)
 				setLocalStorage()
 				
 				propertyValue.innerText = task.dueDate
@@ -169,7 +171,7 @@ const taskLayout = ( () => {
 
 			// select current task using data-id (created on edit button)
 			const propertyName = e.target.parentNode.firstChild.innerText
-			const property = u.headlineToTaskMethods(propertyName)
+			const property = headlineToTaskMethods(propertyName)
 			// returns and object containing setter and getter names
 			// for current task property
 			// access using task[property.setter] (task.newDescription)
